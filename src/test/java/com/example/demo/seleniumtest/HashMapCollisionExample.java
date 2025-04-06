@@ -91,14 +91,4 @@ public class HashMapCollisionExample {
 
     }
 
-    public void hashMapTesting5() {
-        HashMap<String, Integer> map = new HashMap<>();
-
-    }
-
-    public void hashMapTesting6() {
-        HashMap<String, Integer> map = new HashMap<>();
-
-    }
-
 }
