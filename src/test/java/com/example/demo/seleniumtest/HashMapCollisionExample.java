@@ -96,4 +96,9 @@ public class HashMapCollisionExample {
 
     }
 
+    public void hashMapTesting6() {
+        HashMap<String, Integer> map = new HashMap<>();
+
+    }
+
 }
