@@ -91,4 +91,13 @@ public class HashMapCollisionExample {
 
     }
 
+    public void hashMapTesting4() {
+        HashMap<String, Integer> map = new HashMap<>();
+        System.out.println("test");
+    }
+
+    public void testOfGit() {
+
+    }
+
 }
