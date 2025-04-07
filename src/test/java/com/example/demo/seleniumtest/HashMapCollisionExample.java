@@ -95,4 +95,8 @@ public class HashMapCollisionExample {
         HashMap<String, Integer> map = new HashMap<>();
         System.out.println("test");
     }
+
+    public void testOfGit() {
+
+    }
 }
