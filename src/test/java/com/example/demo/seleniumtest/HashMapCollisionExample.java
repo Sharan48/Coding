@@ -97,6 +97,10 @@ public class HashMapCollisionExample {
     }
 
     public void testOfGit() {
+        System.out.println("Hi sharan, I'm here and changes are commited");
+    }
+
+    public void addtest() {
 
     }
 
