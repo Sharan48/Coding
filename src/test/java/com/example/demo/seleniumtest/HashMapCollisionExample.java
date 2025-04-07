@@ -100,4 +100,8 @@ public class HashMapCollisionExample {
 
     }
 
+    public void minus() {
+
+    }
+
 }
