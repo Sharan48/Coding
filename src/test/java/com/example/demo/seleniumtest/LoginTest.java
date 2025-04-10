@@ -51,7 +51,11 @@ public class LoginTest {
     @Test
     public void relativeLocator() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
+
         ChromeOptions options = new ChromeOptions();
+        options.addArguments(
+                "user-data-dir=" + System.getProperty("java.io.tmpdir") + "/profile_" + System.currentTimeMillis());
+
         WebDriver driver = new ChromeDriver(options);
         driver.get("http://dev-opera.bscxpress.com.s3-website.ap-south-1.amazonaws.com/login");
         driver.manage().window().maximize();
