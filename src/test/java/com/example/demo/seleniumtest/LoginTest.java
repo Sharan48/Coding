@@ -54,14 +54,15 @@ public class LoginTest {
     @Test
     public void relativeLocator() throws InterruptedException, IOException {
         WebDriverManager.chromedriver().setup();
-        File tempProfile = new File(System.getProperty("java.io.tmpdir"), "chromeProfile_" + System.nanoTime());
-        tempProfile.mkdir();
+        // File tempProfile = new File(System.getProperty("java.io.tmpdir"),
+        // "chromeProfile_" + System.nanoTime());
+        // tempProfile.mkdir();
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-data-dir=" + tempProfile.getAbsolutePath());
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-allow-origins=*");
+        // options.addArguments("user-data-dir=" + tempProfile.getAbsolutePath());
+        // options.addArguments("--no-sandbox");
+        // options.addArguments("--disable-dev-shm-usage");
+        // options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1080");
 
         WebDriver driver = new ChromeDriver(options);
@@ -79,7 +80,7 @@ public class LoginTest {
         WebElement click = driver.findElement(RelativeLocator.with(By.tagName("button")).below(forgetPassword));
         click.click();
         driver.quit();
-        FileUtils.deleteDirectory(tempProfile);
+        // FileUtils.deleteDirectory(tempProfile);
 
     }
 
