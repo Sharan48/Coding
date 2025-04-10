@@ -1,8 +1,11 @@
 package com.example.demo.seleniumtest;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,11 +52,16 @@ public class LoginTest {
     }
 
     @Test
-    public void relativeLocator() throws InterruptedException {
+    public void relativeLocator() throws InterruptedException, IOException {
         WebDriverManager.chromedriver().setup();
+        File tempProfile = new File(System.getProperty("java.io.tmpdir"), "chromeProfile_" + System.nanoTime());
+        tempProfile.mkdir();
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments(
-                "user-data-dir=" + System.getProperty("java.io.tmpdir") + "/profile_" + System.currentTimeMillis());
+        options.addArguments("user-data-dir=" + tempProfile.getAbsolutePath());
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
 
         WebDriver driver = new ChromeDriver(options);
         driver.get("http://dev-opera.bscxpress.com.s3-website.ap-south-1.amazonaws.com/login");
@@ -70,6 +78,7 @@ public class LoginTest {
         WebElement click = driver.findElement(RelativeLocator.with(By.tagName("button")).below(forgetPassword));
         click.click();
         driver.quit();
+        FileUtils.deleteDirectory(tempProfile);
 
     }
 
