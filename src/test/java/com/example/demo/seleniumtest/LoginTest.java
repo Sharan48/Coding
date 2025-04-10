@@ -62,6 +62,7 @@ public class LoginTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1080");
 
         WebDriver driver = new ChromeDriver(options);
         driver.get("http://dev-opera.bscxpress.com.s3-website.ap-south-1.amazonaws.com/login");
