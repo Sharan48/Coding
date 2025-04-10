@@ -63,6 +63,7 @@ public class LoginTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(2000);
+
         System.out.println("run in jenkins");
 
         WebElement username = driver.findElement(By.cssSelector("#outlined-basic"));
