@@ -64,7 +64,7 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(2000);
 
-        System.out.println("run in jenkins test 45 uu  ggg gg ggg jj");
+        System.out.println("run in jenkins test 45 uu  ggg gg ggg jj jj");
 
         WebElement username = driver.findElement(By.cssSelector("#outlined-basic"));
         username.sendKeys("sharantest");
