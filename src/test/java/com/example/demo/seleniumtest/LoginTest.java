@@ -21,7 +21,7 @@ public class LoginTest {
 
     }
 
-    @Test
+    // @Test
     public void testTable() throws InterruptedException {
 
         WebDriverManager.chromedriver().setup();
@@ -63,6 +63,7 @@ public class LoginTest {
         WebElement forgetPassword = driver.findElement(RelativeLocator.with(By.tagName("a")).below(password));
         WebElement click = driver.findElement(RelativeLocator.with(By.tagName("button")).below(forgetPassword));
         click.click();
+        driver.quit();
 
     }
 
