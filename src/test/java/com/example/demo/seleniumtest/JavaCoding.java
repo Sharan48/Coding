@@ -24,7 +24,7 @@ public class JavaCoding {
         System.out.println("is array palidrome? " + checkPalidrome(palidrome));
 
         // check isPrime Number
-        System.out.println("isPrime? " + isPrime(9));
+        System.out.println("isPrime? " + isPrime(21));
         findIndex();
 
         // check anagram of string
@@ -43,6 +43,9 @@ public class JavaCoding {
         moveCursorLeftToRight();
 
         testCodes();
+
+        arrayManipilate();
+        moveCharacter();
     }
 
     public static void arrayWithStream() {
@@ -403,7 +406,7 @@ public class JavaCoding {
 
     }
 
-    public static boolean isPrime(int num) {
+    public static boolean isPrime(double num) {
 
         if (num <= 1)
             return false;
@@ -412,8 +415,8 @@ public class JavaCoding {
         if (num == 2)
             return true;
 
-        for (int i = 3; i < Math.sqrt(num); i += 2) {
-            if (i % 2 == 0) {
+        for (int i = 3; i < Math.sqrt(num); i++) {
+            if (num % i == 0) {
                 return false;
             }
         }
@@ -598,6 +601,68 @@ public class JavaCoding {
         } else {
             System.out.println("Not a palidrome number");
         }
+    }
+
+    public static void arrayManipilate() {
+        // fetch odd place and replace in even place
+        int[] frt = { 1, 2, 3, 5, 1, 2, 3 };
+
+        int[] sec = { 4, 5, 6, 7, 7, 6, 7 };
+
+        int j = 1;
+
+        for (int i = 0; i < sec.length; i++) {
+            if (i % 2 == 0 && j < frt.length) {
+                sec[i] = frt[j];
+                j += 2;
+            }
+        }
+        System.out.println(Arrays.toString(sec));
+
+        // fetch odd number and replace on even number
+        int[] ary1 = { 1, 3, 4, 5, 6, 7, 8, };
+        int[] ary2 = { 2, 4, 1, 3, 8, 10 };
+        int j1 = 0;
+
+        for (int i = 0; i < ary2.length; i++) {
+            if (ary2[i] % 2 == 0 & j1 < ary1.length) {
+                // skip even number
+                while (ary1[j1] % 2 == 0) {
+                    j1++;
+                }
+
+                if (j1 < ary1.length) {
+                    ary2[i] = ary1[j1];
+                    j1++;
+                }
+            }
+        }
+        System.out.println("Try programiz.pro" + Arrays.toString(ary2));
+
+    }
+
+    public static void moveCharacter() {
+        // Reverse characters not a special charcater
+        String str = "sharan@#$%aman";
+        char[] cha = str.toLowerCase().toCharArray();
+        int left = 0, righ = cha.length - 1;
+
+        while (left < righ) {
+            if (!Character.isLetter(cha[left])) {
+                left++;
+            } else if (!Character.isLetter(cha[righ])) {
+                righ--;
+            } else {
+                char temp = cha[righ];
+                cha[righ] = cha[left];
+                cha[left] = temp;
+                left++;
+                righ--;
+            }
+
+        }
+
+        System.out.println(new String(cha));
     }
 
 }
