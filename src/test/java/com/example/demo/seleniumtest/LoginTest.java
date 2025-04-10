@@ -51,7 +51,6 @@ public class LoginTest {
     @Test
     public void relativeLocator() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments(
                 "user-data-dir=" + System.getProperty("java.io.tmpdir") + "/profile_" + System.currentTimeMillis());
