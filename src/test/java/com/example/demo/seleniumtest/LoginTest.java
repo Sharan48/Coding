@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.Test;
 
@@ -50,7 +51,8 @@ public class LoginTest {
     @Test
     public void relativeLocator() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        WebDriver driver = new ChromeDriver(options);
         driver.get("http://dev-opera.bscxpress.com.s3-website.ap-south-1.amazonaws.com/login");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
