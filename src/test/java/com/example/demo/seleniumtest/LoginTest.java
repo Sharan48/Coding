@@ -66,7 +66,7 @@ public class LoginTest {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless", "--disable-gpu",
-        "--window-size=1920,1080");
+                "--window-size=1920,1080");
 
         WebDriver driver = new ChromeDriver(options);
         driver.get(url);
@@ -74,7 +74,7 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(2000);
 
-        System.out.println("run in jenkins test, im here");
+        System.out.println("run in jenkins test, im here jj");
 
         WebElement username = driver.findElement(By.cssSelector("#outlined-basic"));
         username.sendKeys(usernam);
