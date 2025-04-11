@@ -26,11 +26,14 @@ public class LoginTest {
     }
 
     // @Test
-    public void testTable() throws InterruptedException {
+    public void testTable() throws InterruptedException, IOException {
+        String env = System.getProperty("env", "qa");
+        ConfigLoad.load(env);
+        String url = ConfigLoad.get("base.url");
 
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        driver.get("https://www.techlistic.com/2017/02/automate-demo-web-table-with-selenium.html");
+        driver.get(url);
         driver.manage().window().maximize();
         Thread.sleep(2000);
 
@@ -53,13 +56,20 @@ public class LoginTest {
 
     @Test
     public void relativeLocator() throws InterruptedException, IOException {
+        String qa = System.getProperty("env", "qa");
+        ConfigLoad.load(qa);
+        String url = ConfigLoad.get("base.url");
         WebDriverManager.chromedriver().setup();
 
+        String passwd = ConfigLoad.get("password");
+        String usernam = ConfigLoad.get("username");
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1080");
+        options.addArguments("--headless", "--disable-gpu",
+        "--window-size=1920,1080");
 
         WebDriver driver = new ChromeDriver(options);
-        driver.get("http://dev-opera.bscxpress.com.s3-website.ap-south-1.amazonaws.com/login");
+        driver.get(url);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(2000);
@@ -67,9 +77,9 @@ public class LoginTest {
         System.out.println("run in jenkins test, im here");
 
         WebElement username = driver.findElement(By.cssSelector("#outlined-basic"));
-        username.sendKeys("sharantest");
+        username.sendKeys(usernam);
         WebElement password = driver.findElement(RelativeLocator.with(By.tagName("input")).below(username));
-        password.sendKeys("password");
+        password.sendKeys(passwd);
         WebElement forgetPassword = driver.findElement(RelativeLocator.with(By.tagName("a")).below(password));
         WebElement click = driver.findElement(RelativeLocator.with(By.tagName("button")).below(forgetPassword));
         click.click();
