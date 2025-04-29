@@ -139,6 +139,9 @@
                     <!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
                     <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                 </suiteXmlFiles>
+                <systemPropertyVariables>
+          <env>${env}</env>
+        </systemPropertyVariables>
             </configuration>
         </plugin>
     </plugins>
