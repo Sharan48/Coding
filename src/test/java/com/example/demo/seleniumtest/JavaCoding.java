@@ -3,6 +3,8 @@ package com.example.demo.seleniumtest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,10 @@ public class JavaCoding {
 
         arrayManipilate();
         moveCharacter();
+
+        String str = "abc";
+        permutations(str, "");
+
     }
 
     public static void arrayWithStream() {
@@ -344,6 +350,23 @@ public class JavaCoding {
         System.out.println("Minimum String: " + mn);
         System.out.println("Maximum String: " + mx1);
 
+        // Second largest lstring
+
+        String[] arr = { "apple", "banana", "grapes", "kiwi", "watermelon" };
+        String larg = "", secnd = "";
+
+        for (String st : arr) {
+            if (st.length() > larg.length()) {
+                secnd = larg;
+                larg = st;
+            } else if (st.length() > secnd.length() && st.length() != larg.length()) {
+                secnd = st;
+            }
+        }
+
+        System.out.println("Try programiz.pro " + secnd);
+        System.out.println("Try programiz.pro " + larg);
+
         String strw = "sharan";
         char[] ch = strw.toCharArray();
 
@@ -588,7 +611,7 @@ public class JavaCoding {
 
         int pal = 1233219;
         int original = pal;
-        int revers = 0;
+        int revers = 1;
 
         while (pal != 0) {
             int digit = pal % 10;
@@ -663,6 +686,193 @@ public class JavaCoding {
         }
 
         System.out.println(new String(cha));
+
+        // Count vowel and consonants in string
+
+        String let = "Automation";
+        String vwl = "AEIOUaeiou";
+
+        int vowel = 0, consnt = 0;
+
+        char[] arylst = let.toCharArray();
+
+        for (char cont : arylst) {
+            if (vwl.indexOf(cont) != -1) {
+                vowel++;
+            } else {
+                consnt++;
+            }
+        }
+
+        System.out.println(vowel);
+        System.out.println(consnt);
+
+        // Factorail number
+
+        int num = 10;
+        int factorial = 1;
+
+        for (int i = 1; i <= num; i++) {
+            factorial *= i;
+        }
+
+        System.out.println(factorial);
+
+        // counting consecutive repeating characters
+        String ff = "aabbcccddd";
+
+        StringBuilder ouput = new StringBuilder();
+        int count = 1;
+
+        for (int i = 1; i < ff.length(); i++) {
+            if (ff.charAt(i) == ff.charAt(i - 1)) {
+                count++;
+            } else {
+                ouput.append(ff.charAt(i - 1)).append(count);
+                count = 1;
+            }
+        }
+
+        ouput.append(ff.charAt(ff.length() - 1)).append(count);
+        System.out.println(ouput.toString());
+
+        String str2 = "aabbffggkkeeetssss";
+        char[] ch = str2.toCharArray();
+
+        LinkedHashMap<Character, Long> map = new LinkedHashMap<>();
+
+        StringBuilder ouput5 = new StringBuilder();
+
+        for (char count4 : ch) {
+            map.put(count4, map.getOrDefault(count4, (long) 0) + 1);
+        }
+
+        for (Map.Entry<Character, Long> entry : map.entrySet()) {
+            ouput5.append(entry.getKey()).append(entry.getValue());
+        }
+        System.out.println(ouput5.toString());
+
+        String dd = "a2b3c2d1";
+        StringBuilder hh = new StringBuilder();
+
+        for (int i = 0; i < dd.length(); i += 2) {
+
+            char chh = dd.charAt(i);
+            int digit = Character.getNumericValue(dd.charAt(i + 1));
+
+            for (int j = 0; j < digit; j++) {
+                hh.append(chh);
+            }
+        }
+        System.out.println(hh.toString());
     }
 
+    public static void permutations(String str, String prefix) {
+        if (str.length() == 0) {
+            System.out.println(prefix);
+        } else {
+            for (int i = 0; i < str.length(); i++) {
+                String rem = str.substring(0, i) + str.substring(i + 1);
+                permutations(rem, prefix + str.charAt(i));
+            }
+        }
+
+    }
+
+    public void swaping() {
+        // swap without using third varaible
+        int a = 34;
+        int b = 8;
+
+        a = a + b; // 34+8=42-8=34
+        b = a - b; // 34 42-34=8
+        a = a - b;
+        System.out.println("Try programiz.pro " + a + " " + b);
+
+        String str1 = "hello";
+        String str2 = "word";
+
+        str1 = str1 + str2;// helloword.
+        str2 = str1.substring(0, str1.length() - str2.length());// hello
+        str1 = str1.substring(str2.length());// word
+
+        System.out.println("Try programiz.pro " + str1 + " " + str2);
+    }
+
+    public static void sortLowerAndUppercase() {
+        String str = "ajertinvlAHF DKLNV DK";
+        String replace = str.replaceAll("\\s+", "");
+
+        StringBuilder lower = new StringBuilder();
+        StringBuilder upper = new StringBuilder();
+
+        for (char ch : replace.toCharArray()) {
+            if (Character.isLowerCase(ch)) {
+                lower.append(ch);
+            } else {
+                upper.append(ch);
+            }
+        }
+
+        System.out.println(lower);
+        System.out.println(upper);
+
+        String str9 = "1230055500666"; // ouput 1235556660000
+
+        StringBuilder builder = new StringBuilder();
+        StringBuilder notDigit = new StringBuilder();
+        for (char ch : str9.toCharArray()) {
+            if (ch == '0') {
+                builder.append(ch);
+            } else {
+                notDigit.append(ch);
+            }
+        }
+        System.out.println("Try programiz.pro " + notDigit.toString() + builder.toString());
+    }
+
+    public static void commonNumber() {
+        int[] ary = { 1, 2, 3, 4, 5 };
+        int[] ary1 = { 2, 3, 4, 6, 7, 7, 8 };
+
+        Set<Integer> set = new HashSet<>();
+        Set<Integer> set1 = new LinkedHashSet<>();
+
+        for (int bb : ary) {
+            set.add(bb);
+        }
+
+        for (int jj : ary1) {
+            if (set.contains(jj)) {
+                set1.add(jj);
+            }
+        }
+        System.out.println("Try programiz.pro " + set1);
+    }
+
+    public static void sumIntegerInStringArray() {
+        String[] array = { "5", "2", "9", "a", "1", "6", "#", "3" };
+        int sum = 0;
+        for (String ary : array) {
+            try {
+                sum += Integer.parseInt(ary);
+            } catch (NumberFormatException e) {
+
+            }
+
+        }
+        System.out.println(sum);
+    }
+
+    public static void sumOfNumbers() {
+        int num = 1235;
+        int sum = 0;
+
+        while (num != 0) {
+            int digit = num % 10;
+            sum += digit;
+            num = num / 10;
+        }
+        System.out.print(sum);
+    }
 }
