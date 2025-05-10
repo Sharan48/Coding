@@ -608,4 +608,8 @@ public class JavaCoding {
 
     }
 
+    public void mixed() {
+
+    }
+
 }
