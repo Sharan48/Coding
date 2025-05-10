@@ -604,4 +604,8 @@ public class JavaCoding {
         System.out.println();
     }
 
+    public void soft() {
+
+    }
+
 }
