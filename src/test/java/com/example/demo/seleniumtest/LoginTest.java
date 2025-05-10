@@ -22,6 +22,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -81,8 +84,8 @@ public class LoginTest {
 
         WebDriver driver = new ChromeDriver(options);
         driver.get(url);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(2000);
 
         System.out.println("run in jenkins test, im here jj");
@@ -190,7 +193,7 @@ public class LoginTest {
 
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, enabled = true)
     public void nestedShadowRoot() {
         WebDriverManager.chromedriver().setup();
 
@@ -199,12 +202,14 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
+        // Access first Shadow DOM
         WebElement first = driver.findElement(By.id("shadow_host"));
         SearchContext sdw1 = first.getShadowRoot();
         WebElement text = sdw1.findElement(By.cssSelector("#shadow_content"));
         Assert.assertEquals(text.getText(), "some text");
         System.out.println(text.getText());
 
+        // Access nested Shadow DOM
         WebElement second = sdw1.findElement(By.cssSelector("#nested_shadow_host"));
         SearchContext sdw2 = second.getShadowRoot();
         WebElement sontent = sdw2.findElement(By.cssSelector("#nested_shadow_content"));
