@@ -1,9 +1,12 @@
 package com.example.demo.seleniumtest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -123,6 +126,21 @@ public class HashMapCollisionExample {
 
     public static void testingKey() {
 
+        Product ary1 = new Product(5, "bat", 897);
+        Product ary2 = new Product(7, "baseball", 777);
+
+        ArrayList<Product> aryList = new ArrayList<>();
+        aryList.add(ary1);
+        aryList.add(ary2);
+        System.out.println(aryList);
+        System.out.println(aryList.get(0));
+        int sm = 0;
+        for (Product list : aryList) {
+            System.out.println("list of product " + list);
+            sm += list.price;
+        }
+        System.out.println(sm);
+
         List<Map<String, Object>> product = new ArrayList<>();
 
         HashMap<String, Object> product1 = new HashMap<>();
@@ -135,18 +153,59 @@ public class HashMapCollisionExample {
         product2.put("price", 566);
         product2.put("size", "m");
 
+        // List<Map<String, Object>> arylIst = Arrays.asList(product1, product2);
+
         product.add(product1);
         product.add(product2);
         System.out.println(product);
+
+        System.out.println(product1.containsKey("name"));
+        System.out.println(product1.containsValue(566));
+        Collection<Object> allValue = product1.values();
+        System.out.println(allValue);
 
         int totalPrice = 0;
 
         for (Map<String, Object> list : product) {
             totalPrice += (int) list.get("price");
         }
+
+        for (Map<String, Object> list : product) {
+            for (Map.Entry<String, Object> lk : list.entrySet()) {
+                System.out.println("values od pri " + lk.getValue());
+            }
+        }
         System.out.println(totalPrice);
 
-        Map<String, Product> mp = new HashMap<>();
+        for (Map<String, Object> lst : product) {
+            for (Map.Entry<String, Object> entry : lst.entrySet()) {
+                if (entry.getKey().equals("name")) {
+                    Object hh = entry.getValue();
+                    System.out.println("value " + entry.getValue());
+                }
+
+                Object val = entry.getValue();
+                System.out.println(val);
+            }
+
+            int skkk = 0;
+            for (Map<String, Object> lk : product) {
+                System.out.println("size " + lk.size());
+                Collection<Object> ss = lk.values();
+                Object[] ary = ss.toArray();
+                System.out.println("collection values " + ary);
+                lk.replace("price", 9999);
+                for (String key : lk.keySet()) {
+                    if (key.equals("price")) {
+                        skkk += (int) lk.get(key);
+                    }
+                }
+            }
+            System.out.println("price " + skkk);
+
+        }
+
+        Map<String, Product> mp = new LinkedHashMap<>();
         mp.put("product1", new Product(5, "bat", 897));
         mp.put("product2", new Product(7, "baseball", 777));
         mp.put("product3", new Product(8, "football", 907));
@@ -154,8 +213,12 @@ public class HashMapCollisionExample {
         System.out.println(mp);
         long sumprice = 0;
 
+        System.out.println(mp.values());
+
         for (Map.Entry<String, Product> ent : mp.entrySet()) {
             long vlaue = ent.getValue().price;
+            Product ll = ent.getValue();
+            System.out.println("all values " + ll);
             sumprice += vlaue;
         }
         System.out.println(sumprice);
@@ -201,7 +264,8 @@ class Product {
 
     @Override
     public String toString() {
-        return "Product [size=" + size + ", name=" + name + ", price=" + price + "]";
+        return "[size=" + size + ", name=" + name + ", price=" + price + "]";
+        // return size + name + price;
     }
 
 }

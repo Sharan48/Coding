@@ -52,6 +52,8 @@ public class JavaCoding {
         String str = "abc";
         permutations(str, "");
 
+        reverseHalfString();
+
     }
 
     public static void arrayWithStream() {
@@ -764,7 +766,7 @@ public class JavaCoding {
                 hh.append(chh);
             }
         }
-        System.out.println(hh.toString());
+        System.out.println("Characte repeated added " + hh.toString());
     }
 
     public static void permutations(String str, String prefix) {
@@ -829,6 +831,38 @@ public class JavaCoding {
             }
         }
         System.out.println("Try programiz.pro " + notDigit.toString() + builder.toString());
+
+        // move zero to last
+        int[] ary = { 1, 2, 0, 3, 4, 0, 5, 6, 0, 7, 8, 9 };
+
+        int index = 0;
+        for (int left : ary) {
+            if (left != 0) {
+                ary[index++] = left;
+            }
+        }
+        while (index < ary.length) {
+            ary[index++] = 0;
+        }
+
+        System.out.println(Arrays.toString(ary));
+        System.out.println(index);
+
+        // move zero to first
+        int[] ary1 = { 2, 3, 40, 5, 0, 5, 0, 9 };
+        int n = ary.length - 1;
+
+        for (int i = n; i >= 0; i--) {
+            if (ary1[i] != 0) {
+                ary1[n--] = ary1[i];
+            }
+        }
+
+        while (n >= 0) {
+            ary1[n--] = 0;
+        }
+
+        System.out.println(Arrays.toString(ary1));
     }
 
     public static void commonNumber() {
@@ -874,5 +908,29 @@ public class JavaCoding {
             num = num / 10;
         }
         System.out.print(sum);
+    }
+
+    public static void reverseHalfString() {
+        String str = "sharanabasappa";
+
+        char[] ch = str.toCharArray();
+
+        int h = ch.length / 2;
+
+        int l = 0, r = h;
+
+        while (l < r) {
+            char temp = ch[l];
+            ch[l] = ch[r];
+            ch[r] = temp;
+            l++;
+            r--;
+        }
+        System.out.println(new String(ch));
+    }
+
+    public void tet() {
+        int a;
+
     }
 }

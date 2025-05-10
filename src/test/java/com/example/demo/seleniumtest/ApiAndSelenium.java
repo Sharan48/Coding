@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.ListDocument.List;
 import org.openqa.selenium.By;
@@ -19,6 +20,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+// import org.hamcrest.Matchers.*;
+import org.hamcrest.*;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.RestAssured;
@@ -62,6 +65,9 @@ public class ApiAndSelenium {
 
                 // String name = respnse.jsonPath().get("data.first_name");
                 // System.out.println(name);
+                io.restassured.response.Response repsons = RestAssured.given().baseUri("https://reqres.in").when()
+                                .get("/api/users");
+                repsons.then().body("data", Matchers.notNullValue());
         }
 
         @Test
@@ -155,6 +161,14 @@ public class ApiAndSelenium {
                         sele.selectByVisibleText("Volvo");
                         sele.selectByValue("saab");
                         sele.selectByIndex(3);
+                }
+
+                Set<String> wnd = driver.getWindowHandles();
+                for (String child : wnd) {
+                        if (child.equals("switch to present url")) {
+                                driver.switchTo().window(child);
+                        }
+
                 }
 
         }
