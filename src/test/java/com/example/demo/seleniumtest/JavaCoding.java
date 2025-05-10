@@ -600,4 +600,8 @@ public class JavaCoding {
         }
     }
 
+    public void test() {
+
+    }
+
 }
