@@ -604,12 +604,4 @@ public class JavaCoding {
         System.out.println();
     }
 
-    public void testf() {
-        System.out.println();
-    }
-
-    public void tefst() {
-        System.out.println();
-    }
-
 }
