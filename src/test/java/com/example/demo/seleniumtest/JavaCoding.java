@@ -612,4 +612,8 @@ public class JavaCoding {
 
     }
 
+    public void hard() {
+
+    }
+
 }
