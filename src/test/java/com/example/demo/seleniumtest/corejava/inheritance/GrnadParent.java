@@ -1,4 +1,4 @@
-package com.example.demo.seleniumtest.inheritance;
+package com.example.demo.seleniumtest.corejava.inheritance;
 
 public class GrnadParent {
 

@@ -1,16 +1,18 @@
-package com.example.demo.seleniumtest.inheritance.interfacetest;
+package com.example.demo.seleniumtest.corejava.interfacetest;
 
 public class ImplentInerfce implements TestInteraface, InterfaceA, InterfaceB {
 
     @Override
     public void test() {
-        System.out.println("implementaed");
-        defaultTest();
+        System.out.println("implemented test" + a);
+        TestInteraface.staticMethod();
+
     }
 
     @Override
     public void defaultTest() {
         System.out.println("overrided");
+        TestInteraface.staticMethod();
     }
 
     @Override

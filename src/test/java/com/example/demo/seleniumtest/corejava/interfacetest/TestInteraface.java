@@ -1,4 +1,4 @@
-package com.example.demo.seleniumtest.inheritance.interfacetest;
+package com.example.demo.seleniumtest.corejava.interfacetest;
 
 public interface TestInteraface {
 
