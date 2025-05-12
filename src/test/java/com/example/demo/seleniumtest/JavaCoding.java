@@ -600,4 +600,12 @@ public class JavaCoding {
         }
     }
 
+    public void test() {
+        System.out.println();
+    }
+
+    public void soft() {
+
+    }
+
 }
