@@ -54,6 +54,8 @@ public class JavaCoding {
 
         reverseHalfString();
 
+        testMatrix();
+
     }
 
     public static void arrayWithStream() {
@@ -929,8 +931,28 @@ public class JavaCoding {
         System.out.println(new String(ch));
     }
 
-    public void tet() {
-        int a;
+    public static void testMatrix() {
 
+        Integer[][] matrix = {
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 9 }
+        };
+
+        // check 5
+
+        for (int i = 0; i < matrix.length; i++) { // row count
+            for (int j = 0; j < matrix[i].length; j++) {
+
+                System.out.print(matrix[i][j] + " ");
+                // column count
+                // if (matrix[i][j].equals(5)) {
+                // System.out.println("Found 5 at position " + i + " " + j);
+                // }
+
+            }
+            System.out.println();
+        }
     }
+
 }
