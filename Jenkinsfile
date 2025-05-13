@@ -18,7 +18,7 @@ pipeline{
 
     stages{
        
-       satage('Set Environment'){
+       satge('Set Environment'){
         steps{
             script{
                 //clean up GIT_BRNACH to remove 'origin/'
