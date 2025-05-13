@@ -16,8 +16,11 @@ pipeline {
     }
 
     post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
+         success{
+            echo 'Build Passed!'
+        }
+        failure{
+            echo 'Bild failed!'
         }
     }
 }
