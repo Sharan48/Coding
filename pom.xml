@@ -45,13 +45,6 @@
         <scope>test</scope>
     </dependency> -->
 
-    <!-- Jackson Databind (For handling JSON responses in API testing) -->
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.2</version>
-    </dependency>
-
     <!-- Apache Commons IO (For file handling, screenshots, etc.) -->
     <!-- <dependency>
         <groupId>commons-io</groupId>
@@ -71,12 +64,6 @@
         <artifactId>slf4j-simple</artifactId>
         <version>2.0.9</version>
     </dependency>
-
-    <dependency>
-    <groupId>io.github.bonigarcia</groupId>
-    <artifactId>webdrivermanager</artifactId>
-    <version>5.6.2</version>
-</dependency>
 
  <dependency>
         <groupId>org.apache.poi</groupId>
