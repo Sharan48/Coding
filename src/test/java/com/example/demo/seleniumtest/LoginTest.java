@@ -68,7 +68,7 @@ public class LoginTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void relativeLocator() throws InterruptedException, IOException {
         String qa = System.getProperty("env", "qa");
         ConfigLoad.load(qa);
