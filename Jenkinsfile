@@ -31,7 +31,7 @@ pipeline{
 
         stage('Test'){
             steps{
-                sh "${MAVEN_HOME}/bin/mvn -Denv=${ENV} test -DsuiteXmlFile=testng.xml"
+                sh "${MAVEN_HOME}/bin/mvn -Denv=${ENV} test -DsuiteXmlFile=testng.xml,testng-parallel.xml"
                 
             }
         }
