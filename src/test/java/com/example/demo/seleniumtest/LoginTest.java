@@ -193,10 +193,7 @@ public class LoginTest {
 
     }
 
-    <<<<<<<HEAD @Test(priority=1,enabled=true)=======
-
     @Test(priority = 1, enabled = false)
->>>>>>> testing_branch
     public void nestedShadowRoot() {
         WebDriverManager.chromedriver().setup();
 
