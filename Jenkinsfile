@@ -16,13 +16,13 @@ pipeline{
 
         stage('Build'){
             steps{
-                sh "{MAVEN_HOME}/bin/mvn clean compile"
+                sh "${MAVEN_HOME}/bin/mvn clean compile"
             }
         }
 
         stage('Test'){
             steps{
-                sh "{MAVEN_HOME}/bin/mvn -DsuiteXmlFile=testng.xml"
+                sh "${MAVEN_HOME}/bin/mvn -DsuiteXmlFile=testng.xml"
             }
         }
 
