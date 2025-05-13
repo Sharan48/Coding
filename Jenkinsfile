@@ -87,27 +87,35 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
-        BRANCH_NAME = ''
+        BRANCH_NAME = 'testing_branch' // Set a default branch (e.g., 'main')
         TEST_ENV = ''
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                // Perform initial checkout with a default or specified branch
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "*/${env.BRANCH_NAME}"]],
+                    userRemoteConfigs: [[url: 'https://github.com/Sharan48/Coding.git']]
+                ])
+            }
+        }
+
         stage('Set Environment') {
             steps {
                 script {
-                    // Safely determine the raw branch name
-                    def rawBranch = env.GIT_BRANCH
-                    if (!rawBranch) {
-                        rawBranch = sh(
-                            script: "git rev-parse --abbrev-ref HEAD",
-                            returnStdout: true
-                        ).trim()
-                    }
+                    // Get the branch name from the checked-out repository
+                    def rawBranch = sh(
+                        script: "git rev-parse --abbrev-ref HEAD",
+                        returnStdout: true
+                    ).trim()
 
-                    // Clean 'origin/' prefix and store in env.BRANCH_NAME
-                    env.BRANCH_NAME = rawBranch?.replaceAll('origin/', '')
+                    // Clean 'origin/' prefix if present
+                    env.BRANCH_NAME = rawBranch?.replaceAll('origin/', '') ?: env.BRANCH_NAME
 
-                    // Safely check and assign TEST_ENV
+                    // Set TEST_ENV based on BRANCH_NAME
                     if (env.BRANCH_NAME?.contains('testing')) {
                         env.TEST_ENV = 'qa'
                     } else if (env.BRANCH_NAME?.contains('coding')) {
@@ -119,16 +127,6 @@ pipeline {
                     echo "Branch: ${env.BRANCH_NAME}"
                     echo "Test Environment: ${env.TEST_ENV}"
                 }
-            }
-        }
-
-        stage('Checkout') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "*/${env.BRANCH_NAME}"]],
-                    userRemoteConfigs: [[url: 'https://github.com/Sharan48/Coding.git']]
-                ])
             }
         }
 
