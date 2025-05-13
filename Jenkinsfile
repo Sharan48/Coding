@@ -18,17 +18,17 @@ pipeline{
 
     stages{
        
-       satge('Set Environment'){
+       stage('Set Environment'){
         steps{
             script{
                 //clean up GIT_BRNACH to remove 'origin/'
-                env.GIT_BRANCH="${env.GIT_BRANCH}".replaceAll('origin/','')
+                env.BRANCH_NAME="${env.GIT_BRANCH}".replaceAll('origin/','')
 
                 //Dynamically set TEST_ENV based on branch name
 
-                if(env.GIT_BRANCH.contains('testing')){
+                if(env.BRANCH_NAME.contains('testing')){
                     env.TEST_ENV='qa'
-                }else if(env.GIT_BRANCH.contains('coding')){
+                }else if(env.BRANCH_NAME.contains('coding')){
                     env.TEST_ENV='staging'
 
                 }else{
@@ -50,7 +50,7 @@ pipeline{
             steps{
                 checkout([
                     $class:'GitSCM',
-                    branches:[[name:"*/{env.BRANCH_NAME}"]],
+                    branches:[[name:"*/${env.BRANCH_NAME}"]],
                     userRemoteConfigs:[[url:'https://github.com/Sharan48/Coding.git']]
                 ])
             }
