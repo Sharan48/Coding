@@ -10,7 +10,7 @@ pipeline{
         //Extract current brnach by removig origin/
         BRANCH_NAME="${env.GIT_BRANCH}".replaceAll('origin/','')
         //set environment based on branch login
-        TEST_ENV="${env.GIT_BRNACH}".contains('coding')?'production':(env.GIT_BRANCH.contains('testing')?'staging':'qa')
+        TEST_ENV="${env.GIT_BRNACH}".contains('coding') ? 'production': (env.GIT_BRANCH.contains('testing') ? 'staging':'qa')
     }
 
     // parameters{
