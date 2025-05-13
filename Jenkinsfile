@@ -92,27 +92,33 @@ pipeline {
     }
 
     stages {
-        stage('Set Environment') {
-            steps {
-                script {
-                    // Clean up GIT_BRANCH and set BRANCH_NAME
-                    def gitBranchRaw = "${env.GIT_BRANCH ?: 'origin/testing'}"
-                    env.BRANCH_NAME = gitBranchRaw.replaceAll('origin/', '')
+       stage('Set Environment') {
+    steps {
+        script {
+            // Use GIT_BRANCH if available; otherwise fallback to shell command
+            def rawBranch = env.GIT_BRANCH ?: sh(
+                script: "git rev-parse --abbrev-ref HEAD", 
+                returnStdout: true
+            ).trim()
 
-                    // Dynamically set TEST_ENV based on branch name
-                    if (env.BRANCH_NAME.contains('testing')) {
-                        env.TEST_ENV = 'qa'
-                    } else if (env.BRANCH_NAME.contains('coding')) {
-                        env.TEST_ENV = 'staging'
-                    } else {
-                        env.TEST_ENV = 'production'
-                    }
+            // Clean 'origin/' prefix and store in env.BRANCH_NAME
+            env.BRANCH_NAME = rawBranch.replaceAll('origin/', '')
 
-                    echo "Branch: ${env.BRANCH_NAME}"
-                    echo "Test Environment: ${env.TEST_ENV}"
-                }
+            // Dynamically set TEST_ENV
+            if (env.BRANCH_NAME.contains('testing')) {
+                env.TEST_ENV = 'qa'
+            } else if (env.BRANCH_NAME.contains('coding')) {
+                env.TEST_ENV = 'staging'
+            } else {
+                env.TEST_ENV = 'production'
             }
+
+            echo "Branch: ${env.BRANCH_NAME}"
+            echo "Test Environment: ${env.TEST_ENV}"
         }
+    }
+}
+
 
         stage('Checkout') {
             steps {
