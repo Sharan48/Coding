@@ -68,7 +68,11 @@ public class LoginTest {
         }
     }
 
+<<<<<<< HEAD
     @Test(enabled = false)
+=======
+    @Test(enabled = true)
+>>>>>>> testing_branch
     public void relativeLocator() throws InterruptedException, IOException {
         String qa = System.getProperty("env", "qa");
         ConfigLoad.load(qa);
@@ -193,7 +197,11 @@ public class LoginTest {
 
     }
 
+<<<<<<< HEAD
     @Test(priority = 1, enabled = true)
+=======
+    @Test(priority = 1, enabled = false)
+>>>>>>> testing_branch
     public void nestedShadowRoot() {
         WebDriverManager.chromedriver().setup();
 
