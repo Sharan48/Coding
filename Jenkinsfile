@@ -19,7 +19,7 @@ pipeline{
        
         stage('Checkout'){
             steps{
-                git url: 'https://github.com/Sharan48/Coding.git', branch:'testing_branch'
+                git url: 'https://github.com/Sharan48/Coding.git', branch:'coding'
             } 
         }
 
