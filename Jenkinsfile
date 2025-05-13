@@ -87,22 +87,11 @@ pipeline {
     environment {
         MAVEN_HOME = '/usr/share/maven'
         JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
-        BRANCH_NAME = 'testing_branch' // Set a default branch (e.g., 'main')
+        BRANCH_NAME = 'testing_branch' // Default branch
         TEST_ENV = ''
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Perform initial checkout with a default or specified branch
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "*/${env.BRANCH_NAME}"]],
-                    userRemoteConfigs: [[url: 'https://github.com/Sharan48/Coding.git']]
-                ])
-            }
-        }
-
         stage('Set Environment') {
             steps {
                 script {
@@ -113,17 +102,25 @@ pipeline {
                     ).trim()
 
                     // Clean 'origin/' prefix if present
-                    env.BRANCH_NAME = rawBranch?.replaceAll('origin/', '') ?: env.BRANCH_NAME
+                    env.BRANCH_NAME = rawBranch?.replaceAll('origin/', '') ?: 'main'
+
+                    // Debug: Print branch name before setting TEST_ENV
+                    echo "Raw Branch: ${rawBranch}"
+                    echo "Cleaned Branch: ${env.BRANCH_NAME}"
 
                     // Set TEST_ENV based on BRANCH_NAME
-                    if (env.BRANCH_NAME?.contains('testing')) {
+                    if (env.BRANCH_NAME.contains('testing')) {
                         env.TEST_ENV = 'qa'
-                    } else if (env.BRANCH_NAME?.contains('coding')) {
+                        echo "Set TEST_ENV to qa"
+                    } else if (env.BRANCH_NAME.contains('coding')) {
                         env.TEST_ENV = 'staging'
+                        echo "Set TEST_ENV to staging"
                     } else {
                         env.TEST_ENV = 'production'
+                        echo "Set TEST_ENV to production"
                     }
 
+                    // Debug: Verify TEST_ENV
                     echo "Branch: ${env.BRANCH_NAME}"
                     echo "Test Environment: ${env.TEST_ENV}"
                 }
