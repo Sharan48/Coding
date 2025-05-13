@@ -6,11 +6,10 @@ pipeline{
         MAVEN_HOME='/usr/share/maven'
         JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
         // ENV="${params.ENV}"
-        
-        //Extract current brnach by removig origin/
-        BRANCH_NAME="${env.GIT_BRANCH}".replaceAll('origin/','')
-        //set environment based on branch login
-        TEST_ENV="${env.GIT_BRNACH}".contains('coding') ? 'production': (env.GIT_BRANCH.contains('testing') ? 'staging':'qa')
+        // Set a placeholder – required by declarative syntax
+        BRANCH_NAME= ''
+        TEST_ENV= ''
+
     }
 
     // parameters{
@@ -18,6 +17,31 @@ pipeline{
     // }
 
     stages{
+       
+       satage('Set Environment'){
+        steps{
+            script{
+                //clean up GIT_BRNACH to remove 'origin/'
+                env.GIT_BRANCH="${env.GIT_BRANCH}".replaceAll('origin/','')
+
+                //Dynamically set TEST_ENV based on branch name
+
+                if(env.GIT_BRANCH.contains('testing')){
+                    env.TEST_ENV='qa'
+                }else if(env.GIT_BRANCH.contains('coding')){
+                    env.TEST_ENV='staging'
+
+                }else{
+                    env.TEST_ENV='production'
+                }
+
+                echo "branch : ${env.BRANCH_NAME}"
+                echo "test environment : ${env.TEST_ENV}"
+
+            }
+        }
+       }
+
         stage('Checkout'){
             // steps{
             //     git url: 'https://github.com/Sharan48/Coding.git', branch:'testing_branch'
