@@ -3,14 +3,14 @@
     <test name="ChromeTest">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.example.demo.seleniumtest.endtoend.LoginPageTest.java"/>
+            <class name="seleniumtest.endtoend.LoginPageTest.java"/>
         </classes>
     </test>
 
     <test name="FirefoxTest">
         <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="com.example.demo.seleniumtest.endtoend.LoginPageTest.java"/>
+            <class name="seleniumtest.endtoend.LoginPageTest.java"/>
         </classes>
     </test>
 </suite>
