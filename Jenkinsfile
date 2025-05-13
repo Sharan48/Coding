@@ -5,6 +5,7 @@ pipeline{
     environment {
         MAVEN_HOME='/usr/share/maven'
         JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
+        ENV='qa'
         // ENV="${params.ENV}
 
     }
@@ -30,7 +31,7 @@ pipeline{
 
         stage('Test'){
             steps{
-                sh "${MAVEN_HOME}/bin/mvn -Denv=qa test -DsuiteXmlFile=testng.xml"
+                sh "${MAVEN_HOME}/bin/mvn -Denv=${ENV} test -DsuiteXmlFile=testng.xml"
                 
             }
         }
