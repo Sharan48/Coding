@@ -5,6 +5,7 @@ pipeline{
     environment {
         MAVEN_HOME='/usr/share/maven'
         JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
+        GIT_HOME='/usr/bin/git'
     }
 
     stages{
