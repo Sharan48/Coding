@@ -33,13 +33,13 @@ public class BaseClass {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless", "--disable-gpu",
                     "--window-size=1920,1080");
-            driver.set(new ChromeDriver());
+            driver.set(new ChromeDriver(options));
         } else if (browser.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
             EdgeOptions options = new EdgeOptions();
             options.addArguments("--headless", "--disable-gpu",
                     "--window-size=1920,1080");
-            driver.set(new EdgeDriver());
+            driver.set(new EdgeDriver(options));
 
         } else {
             throw new RuntimeException("Unsupported browser: " + browser);
