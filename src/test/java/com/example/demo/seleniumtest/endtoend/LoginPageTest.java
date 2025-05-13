@@ -1,6 +1,6 @@
 package com.example.demo.seleniumtest.endtoend;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseClass {
 

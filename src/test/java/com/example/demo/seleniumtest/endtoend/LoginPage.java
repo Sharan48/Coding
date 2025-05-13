@@ -1,12 +1,10 @@
 package com.example.demo.seleniumtest.endtoend;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BaseClass {
-    WebDriver driver;
 
     @FindBy(id = "outlined-basic")
     private WebElement usernameField;

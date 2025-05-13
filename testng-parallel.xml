@@ -8,7 +8,7 @@
     </test>
 
     <test name="FirefoxTest">
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="com.example.demo.seleniumtest.endtoend.LoginPageTest"/>
         </classes>
