@@ -10,7 +10,7 @@ pipeline{
     stages{
         stage('Checkout'){
             steps{
-                git 'https://github.com/Sharan48/Coding.git'
+                git url: 'https://github.com/Sharan48/Coding.git', branch:'testing_branch'
             }
         }
 
