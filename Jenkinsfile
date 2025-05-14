@@ -54,19 +54,8 @@ pipeline{
         // }
         always{
             emailtext{
-                subject: "Build Result: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                    <p>Hi Team,</p>
-                    <p>The test build has completed. See the details below:</p>
-                    <ul>
-                      <li><b>Job:</b> ${env.JOB_NAME}</li>
-                      <li><b>Build Number:</b> ${env.BUILD_NUMBER}</li>
-                      <li><b>Status:</b> ${currentBuild.currentResult}</li>
-                      <li><b>Report:</b> <a href="${env.BUILD_URL}HTML_20Report/">Click to View Report</a></li>
-                    </ul>
-                    <p>Thanks,<br/>Automation Jenkins</p>
-                """,
-                mimeType: 'text/html',
+                subject:"Automation Reports- ${env.JOB_NAME} #${env.BUILDNUMBER}",
+                body:"Please find the attached reports"
                 to: "${env.EMAIL_RECIPIENTS}"
 
             }
