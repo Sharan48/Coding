@@ -54,10 +54,11 @@ pipeline{
         // }
         always{
             emailtext{
-                subject:"Automation Reports ",
-                body:"Please find the attached reports",
-                attachmentsPattern:"**/target/surefire-reports/*.html",
-                to: "${env.EMAIL_RECIPIENTS}"
+                subject: "Automation Reports - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Test completed. Please check attached report.",
+                to: "${EMAIL_RECIPIENTS}",
+                attachmentsPattern: "**/target/*.html",
+                mimeType: 'text/html'
 
             }
         }
