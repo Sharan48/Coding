@@ -57,7 +57,7 @@ pipeline{
                 subject: "Automation Reports - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "Test completed. Please check attached report.",
                 to: "${EMAIL_RECIPIENTS}",
-                attachmentsPattern: "**/target/*.html",
+                attachmentsPattern: "**/target/surefire-reports/*.html",
                 mimeType: 'text/html'
 
             }
