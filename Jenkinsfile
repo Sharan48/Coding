@@ -36,6 +36,12 @@ pipeline{
             }
         }
 
+        stage('Archive Test Rsults'){
+            steps{
+                archiveArtifacts artifacts: 'target/surefire-reports/*.xml', fingerprint:true
+            }
+        }
+
     }
 
     post{
