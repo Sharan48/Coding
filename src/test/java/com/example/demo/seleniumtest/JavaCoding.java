@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,46 +19,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class JavaCoding {
-
-    public static void main(String[] ard) {
-        testCode();
-        // Check palidrome
-
-        int[] palidrome = { 1, 2, 3, 2, 1 };
-        System.out.println("is array palidrome? " + checkPalidrome(palidrome));
-
-        // check isPrime Number
-        System.out.println("isPrime? " + isPrime(21));
-        findIndex();
-
-        // check anagram of string
-        String str1 = "tomato";
-        String str2 = "matoto";
-
-        if (checkAnagram(str1, str2)) {
-            System.out.println("anagram");
-        } else {
-            System.out.println(" Not a anagram");
-        }
-
-        removeDuplicateCharacters();
-
-        // Moving odd number to left and even number to right
-        moveCursorLeftToRight();
-
-        testCodes();
-
-        arrayManipilate();
-        moveCharacter();
-
-        String str = "abc";
-        permutations(str, "");
-
-        reverseHalfString();
-
-        testMatrix();
-
-    }
 
     public static void arrayWithStream() {
 
@@ -615,7 +577,7 @@ public class JavaCoding {
 
         int pal = 1233219;
         int original = pal;
-        int revers = 1;
+        int revers = 0;
 
         while (pal != 0) {
             int digit = pal % 10;
@@ -805,7 +767,7 @@ public class JavaCoding {
 
     public static void sortLowerAndUppercase() {
         String str = "ajertinvlAHF DKLNV DK";
-        String replace = str.replaceAll("\\s+", "");
+        String replace = str.replaceAll("\s+", "");
 
         StringBuilder lower = new StringBuilder();
         StringBuilder upper = new StringBuilder();
@@ -953,6 +915,106 @@ public class JavaCoding {
             }
             System.out.println();
         }
+    }
+
+    // Array vs ArrayList
+    public static void arrayList() {
+        final ArrayList<Integer> list = new ArrayList<>();
+        list.add(5);
+        list.add(7);
+        list.add(8);
+        list.add(9);
+
+        System.out.println(list.size());
+        System.out.println(list.contains(9));
+        System.out.println(list.get(0));
+        System.out.println(list.isEmpty());
+        System.out.println(list.remove(0)); // remove() have two scenarios one is based on index and object expect
+                                            // Integer remaining will handled by internally but integer you have to use
+                                            // for object Integer.valueOf()
+        System.out.println(list.get(0));
+        System.out.println(Integer.valueOf(8));
+        System.out.println(list);
+        // list.clear();
+        // System.out.println(list.get(0));// After clear you want to fetch element from
+        // list you will get exception Exception in thread "main"
+        // java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+
+        Iterator<Integer> it = list.iterator();
+        while (it.hasNext()) {
+            Integer i = it.next();
+            System.out.println(i);
+        }
+
+        for (Integer jj : list) {
+            System.out.println(jj);
+        }
+
+        System.out.println(list.set(1, 9));
+        System.out.println(list.get(1));
+        System.out.println(list);
+
+        HashSet<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(3);
+        set.add(4);
+        System.out.println(set.size());
+
+        for (Integer kk : set) {
+            System.out.println(kk);
+        }
+
+        LinkedList<Integer> limked = new LinkedList<>();
+
+        LinkedHashSet<Integer> lnkset = new LinkedHashSet<>();
+        lnkset.add(1);
+        lnkset.remove(1);
+        System.out.println(lnkset);
+
+        Map<Integer, Integer> amp = new LinkedHashMap<>();
+
+    }
+
+    public static void main(String[] ard) {
+        // testCode();
+        // // Check palidrome
+
+        // int[] palidrome = { 1, 2, 3, 2, 1 };
+        // System.out.println("is array palidrome? " + checkPalidrome(palidrome));
+
+        // // check isPrime Number
+        // System.out.println("isPrime? " + isPrime(21));
+        // findIndex();
+
+        // // check anagram of string
+        // String str1 = "tomato";
+        // String str2 = "matoto";
+
+        // if (checkAnagram(str1, str2)) {
+        // System.out.println("anagram");
+        // } else {
+        // System.out.println(" Not a anagram");
+        // }
+
+        // removeDuplicateCharacters();
+
+        // Moving odd number to left and even number to right
+        // moveCursorLeftToRight();
+
+        // testCodes();
+
+        // arrayManipilate();
+        // moveCharacter();
+
+        // String str = "abc";
+        // permutations(str, "");
+
+        // reverseHalfString();
+
+        // testMatrix();
+
+        arrayList();
+
     }
 
 }
