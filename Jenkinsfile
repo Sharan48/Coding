@@ -2,6 +2,11 @@
 pipeline{
     agent any
 
+    triggers{
+        // pollSCM('H/15 * * * *')
+        cron('H/15 * * * *')
+    }
+
     environment {
         MAVEN_HOME='/usr/share/maven'
         JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'

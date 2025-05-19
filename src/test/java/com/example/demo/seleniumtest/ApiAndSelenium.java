@@ -26,8 +26,11 @@ import org.hamcrest.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class ApiAndSelenium {
@@ -82,6 +85,8 @@ public class ApiAndSelenium {
                 RequestSpecification url = new RequestSpecBuilder()
                                 .setBaseUri("http://52.66.141.164:8001/opera-services")
                                 .build();
+
+                ResponseSpecification rp = new ResponseSpecBuilder().expectContentType(ContentType.JSON).build();
 
                 RestAssured.given().body(body).when().get("http://52.66.141.164:8001/opera-services/v1/opera/branch")
                                 .then()

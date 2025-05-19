@@ -33,7 +33,7 @@ public class MyntraTest {
         System.out.println("Myntra homepage opened successfully");
 
         // List of links
-        // List<WebElement> links = driver.findElements(By.tagName("a"));
+        List<WebElement> links = driver.findElements(By.tagName("a"));
         // for (WebElement link : links) {
         // System.out.println("Link: " + link.getText());
         // String linksText = link.getText();

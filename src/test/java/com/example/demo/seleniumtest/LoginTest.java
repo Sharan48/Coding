@@ -89,6 +89,7 @@ public class LoginTest {
         Thread.sleep(2000);
 
         System.out.println("run in jenkins test, im here jj");
+        Assert.assertTrue(false);
 
         WebElement username = driver.findElement(By.cssSelector("#outlined-basic"));
         username.sendKeys(usernam);
