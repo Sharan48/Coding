@@ -88,7 +88,7 @@ public class HashMapCollisionExample {
         set.add("shaq");
         set.add(null);
 
-        Hashtable<String, Integer> hash = new Hashtable<>();
+        Map<String, Integer> hash = new Hashtable<>();
         hash.put("sharan", 1);
         hash.put("sharan", 2);
         hash.put("sharan1", 1);
@@ -105,6 +105,7 @@ public class HashMapCollisionExample {
 
         pascalTraingle();
         testingKey();
+
     }
 
     public static void pascalTraingle() {
