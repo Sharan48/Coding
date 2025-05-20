@@ -846,6 +846,7 @@ public class JavaCoding {
             }
         }
         System.out.println("Try programiz.pro " + set1);
+
     }
 
     public static void sumIntegerInStringArray() {
@@ -971,7 +972,25 @@ public class JavaCoding {
         lnkset.remove(1);
         System.out.println(lnkset);
 
-        Map<Integer, Integer> amp = new LinkedHashMap<>();
+        Integer[] ary = { 1, 2, 3, 4, 5 };
+        Integer[] ary1 = { 2, 3, 4, 6, 7, 7, 8 };
+
+        ArrayList<Integer> l1 = new ArrayList<>(Arrays.asList(ary));
+
+        ArrayList<Integer> l2 = new ArrayList<>(Arrays.asList(ary1));
+
+        // l1.retainAll(l2); // retain duplicates
+        // System.out.println(l1);
+        // System.out.println(l2);
+
+        // l2.removeAll(l1); // removes duplicates
+        // System.out.println(l2);
+
+        // if (l1.containsAll(l2)) {
+        // System.out.println("con");
+        // } else {
+        // System.out.println("no");
+        // }
 
     }
 
