@@ -2,6 +2,8 @@ package com.example.demo.seleniumtest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,6 +19,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import org.apache.poi.hpsf.Decimal;
 
 public class JavaCoding {
 
@@ -905,10 +909,8 @@ public class JavaCoding {
         // check 5
 
         for (int i = 0; i < matrix.length; i++) { // row count
-            for (int j = 0; j < matrix[i].length; j++) {
-
+            for (int j = 0; j < matrix[i].length; j++) {// column count
                 System.out.print(matrix[i][j] + " ");
-                // column count
                 // if (matrix[i][j].equals(5)) {
                 // System.out.println("Found 5 at position " + i + " " + j);
                 // }
@@ -921,10 +923,16 @@ public class JavaCoding {
     // Array vs ArrayList
     public static void arrayList() {
         final ArrayList<Integer> list = new ArrayList<>();
-        list.add(5);
-        list.add(7);
-        list.add(8);
         list.add(9);
+        list.add(10);
+        list.add(1);
+        list.add(3);
+        // System.out.println(list);
+
+        // list.sort(Comparator.comparingInt(Integer::intValue));
+        // list.sort(Comparator.naturalOrder());
+        // list.sort(Comparator.reverseOrder());
+        System.out.println(list);
 
         System.out.println(list.size());
         System.out.println(list.contains(9));
@@ -991,6 +999,34 @@ public class JavaCoding {
         // } else {
         // System.out.println("no");
         // }
+
+        // convert any primitive, object to string
+        // String nl = String.valueOf(null); // NullPointerException: Cannot read the
+        // array length because "value" is null
+        // System.out.println(nl);
+        String in = String.valueOf(0);
+        System.out.println(in);
+
+        // Testing sort by using COmparable and Comparator interface
+
+        Product p1 = new Product(3, "sharan", 500);
+        Product p2 = new Product(5, "aman", 900);
+        Product p3 = new Product(8, "kushi", 5499);
+        Product p4 = new Product(11, "jaisha", 100);
+
+        List<Product> pd = new ArrayList<>();
+        pd.add(p4);
+        pd.add(p2);
+        pd.add(p3);
+        pd.add(p1);
+
+        System.out.println(pd);
+
+        Collections.sort(pd, new ComparatorTest());
+
+        // pd.sort(Comparator.comparing(Product::getName).thenComparing(Product::getSize)
+        // .thenComparing(Product::getPrice));
+        System.out.println(pd);
 
     }
 

@@ -32,6 +32,7 @@ public class ApiTestingWithExtentReport {
         }
 
         test.pass("GET request returned status code 200");
+
     }
 
     @Test(priority = 1)
@@ -43,6 +44,10 @@ public class ApiTestingWithExtentReport {
         test.info("Getted all recordds");
         test.info("log all " + repons.prettyPrint());
         JsonPath path = repons.body().jsonPath();
+        Headers he = repons.getHeaders();
+        for (Header jj : he) {
+            String ff = jj.getName() + jj.getValue();
+        }
 
     }
 

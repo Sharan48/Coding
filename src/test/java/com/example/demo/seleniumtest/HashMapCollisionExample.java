@@ -1,8 +1,8 @@
 package com.example.demo.seleniumtest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -267,6 +267,25 @@ class Product {
     public String toString() {
         return "[size=" + size + ", name=" + name + ", price=" + price + "]";
         // return size + name + price;
+    }
+
+}
+
+class ComparatorTest implements Comparator<Product> {
+
+    @Override
+    public int compare(Product p1, Product p2) {
+        int result = p1.name.compareTo(p2.name);
+
+        if (result == 0) {
+            result = Integer.compare(p1.size, p2.size);
+        }
+
+        if (result == 0) {
+            result = Double.compare(p1.price, p2.price);
+        }
+
+        return result;
     }
 
 }
