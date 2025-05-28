@@ -43,11 +43,18 @@ public class DataDriven {
             case STRING:
                 return cell.getStringCellValue();
             case NUMERIC:
-                return cell.getNumericCellValue();
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return cell.getDateCellValue();
+                } else {
+                    return cell.getNumericCellValue();
+                }
+
             case BOOLEAN:
                 return cell.getBooleanCellValue();
             case FORMULA:
                 return cell.getCellFormula();
+            case BLANK:
+                return "";
             default:
                 return "";
         }

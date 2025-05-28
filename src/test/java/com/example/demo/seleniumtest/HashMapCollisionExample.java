@@ -182,7 +182,7 @@ public class HashMapCollisionExample {
             for (Map.Entry<String, Object> entry : lst.entrySet()) {
                 if (entry.getKey().equals("name")) {
                     Object hh = entry.getValue();
-                    System.out.println("value " + entry.getValue());
+                    System.out.println("value of product :" + entry.getValue());
                 }
 
                 Object val = entry.getValue();
@@ -194,7 +194,7 @@ public class HashMapCollisionExample {
                 System.out.println("size " + lk.size());
                 Collection<Object> ss = lk.values();
                 Object[] ary = ss.toArray();
-                System.out.println("collection values " + ary);
+                System.out.println("collection values " + ary.toString());
                 lk.replace("price", 9999);
                 for (String key : lk.keySet()) {
                     if (key.equals("price")) {

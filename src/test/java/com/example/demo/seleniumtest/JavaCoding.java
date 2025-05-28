@@ -1027,6 +1027,16 @@ public class JavaCoding {
         // pd.sort(Comparator.comparing(Product::getName).thenComparing(Product::getSize)
         // .thenComparing(Product::getPrice));
         System.out.println(pd);
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("sharan");
+        buffer.replace(4, 5, "55");
+        System.out.println(buffer);
+        buffer.insert(5, 4);
+        System.out.println(buffer);
+        // buffer.delete(4, 5);
+        // System.out.println(buffer);
+        buffer.deleteCharAt(5);
+        System.out.println(buffer);
 
     }
 
