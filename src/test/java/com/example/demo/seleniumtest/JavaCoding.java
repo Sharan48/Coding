@@ -447,6 +447,32 @@ public class JavaCoding {
 
     }
 
+    public static boolean anagranInt(int n, int m) {
+
+        int[] x = new int[10];
+        int[] y = new int[10];
+
+        while (n != 0) {
+            int temp = n % 10;
+            x[temp]++;
+            n = n / 10;
+        }
+
+        while (m != 0) {
+            int temp1 = m % 10;
+            y[temp1]++;
+            m = m / 10;
+        }
+
+        for (int i = 0; i < 10; i++) {
+            if (x[i] != y[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static void removeDuplicateCharacters() {
         String str1 = "Automation";
 
@@ -898,6 +924,35 @@ public class JavaCoding {
         System.out.println(new String(ch));
     }
 
+    public void reverseOrder() {
+        String[] str = { "sharan", "as", "coding", "sharanpage", "aman" };
+
+        // reverse array order
+        // first way
+        for (int i = 0; i < str.length / 2; i++) {
+            String temp = str[i];
+            str[i] = str[str.length - 1 - i];
+            str[str.length - 1 - i] = temp;
+        }
+        System.out.println(Arrays.toString(str));
+
+        // second way
+        int left = 0, right = str.length - 1;
+        while (left < right) {
+            String ch = str[left];
+            str[left] = str[right];
+            str[right] = ch;
+            left++;
+            right--;
+        }
+
+        // reverse each string
+        for (int i = 0; i < str.length; i++) {
+            str[i] = new StringBuilder(str[i]).reverse().toString();
+        }
+        System.out.println(Arrays.toString(str));
+    }
+
     public static void testMatrix() {
 
         Integer[][] matrix = {
@@ -1037,6 +1092,39 @@ public class JavaCoding {
         // System.out.println(buffer);
         buffer.deleteCharAt(5);
         System.out.println(buffer);
+
+        // sort an array according to the order defined by another array
+        Integer[] arys = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        Integer[] order = { 3, 1, 4, 5 };
+
+        List<Integer> lists = orderArray(arys, order);
+        System.out.println(lists);
+
+    }
+
+    // sort an array according to the order defined by another array
+    public static List<Integer> orderArray(Integer[] ary, Integer[] order) {
+
+        Map<Integer, Integer> priorityMap = new HashMap<>();
+        for (int i = 0; i < order.length; i++) {
+            priorityMap.put(order[i], i);
+        }
+
+        List<Integer> list = new ArrayList<>(Arrays.asList(ary));
+
+        list.sort((a, b) -> {
+            if (priorityMap.containsKey(a) && priorityMap.containsKey(b)) {
+                return priorityMap.get(a) - priorityMap.get(b);
+            } else if (priorityMap.containsKey(a)) {
+                return -1; // a comes first
+            } else if (priorityMap.containsKey(b)) {
+                return 1; // b comes first
+            } else {
+                return a - b; // natural order
+            }
+        });
+
+        return list;
 
     }
 

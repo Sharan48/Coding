@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.hc.core5.util.Asserts;
@@ -20,7 +22,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -216,6 +220,117 @@ public class LoginTest {
         WebElement sontent = sdw2.findElement(By.cssSelector("#nested_shadow_content"));
         Assert.assertEquals(sontent.getText(), "nested text");
         System.out.println(sontent.getText());
+
+        driver.quit();
+
+    }
+
+    @Test
+    public void testScrollPage() throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://infinite-scroll.com/demo/full-page");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        int scroll = 6;
+
+        for (int i = 1; i <= scroll; i++) {
+            JavascriptExecutor scpt = (JavascriptExecutor) driver;
+            scpt.executeScript("window.scrollBy(0,document.body.scrollHeight);");
+            Thread.sleep(2000);
+        }
+
+        Thread.sleep(2000);
+        WebElement located = driver.findElement(By.xpath("//p[text()='End of content']"));
+        System.out.println(located.getText());
+
+    }
+
+    @Test
+    public void unKnownPage() throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://infinite-scroll.com/demo/full-page");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        int scroll = 6;
+        boolean found = false;
+
+        for (int i = 1; i <= scroll; i++) {
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,document.body.scrollHeight);");
+            Thread.sleep(1500);
+
+            try {
+                WebElement target = driver.findElement(By.xpath("//p[text()='End of content']"));
+                String text = target.getText();
+                if (!text.isEmpty()) {
+                    System.out.println("ELement found at page " + scroll + " " + text);
+                    found = true;
+                    break;
+                }
+
+            } catch (NoSuchElementException e) {
+                System.out.println("scroll " + i + " :Element is not found");
+            }
+
+        }
+        if (!found) {
+            System.out.println("Elemet not found after maximum scroll: " + scroll);
+        }
+
+        driver.quit();
+
+    }
+
+    @Test
+    public void testPagination() throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://practice.expandtesting.com/dynamic-pagination-table");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        boolean nextPage = true;
+
+        while (nextPage) {
+
+            Thread.sleep(2000);
+
+            // Here fetching data from table
+            List<WebElement> list = driver.findElements(By.cssSelector("tbody#demo tr td"));
+            for (WebElement ele : list) {
+                System.out.println(ele.getText());
+            }
+            // parent element
+            // if you try to using child element at the end you will get stale element
+            // reference.
+            // In this pagination im clicking on linkText
+            // <li class="paginate_button page-item next disabled" id="example_next">
+            // <a class="page-link" aria-disabled="true">Next</a>
+            // </li>
+            WebElement pageNext = driver.findElement(By.id("example_next"));
+            Thread.sleep(2000);
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions
+                    .visibilityOfElementLocated(By.id("example_next")));
+
+            // check class attribute have disabled value then break the loop bcz the button
+            // become a disabled
+            String check = pageNext.getAttribute("class");
+            if (check.contains("disabled")) {
+                nextPage = false;
+            } else {
+                // child element
+                WebElement lnk = pageNext.findElement(By.tagName("a"));
+                lnk.click();
+            }
+
+        }
 
         driver.quit();
 

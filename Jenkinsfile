@@ -2,6 +2,13 @@
 pipeline{
     agent any
 
+    // agent{
+    //     dockerfile{
+    //         filename 'Dockerfile'
+    //         dir '.'
+    //     }
+    // }
+
     triggers{
         // pollSCM('H/15 * * * *')
         // cron('H/15 * * * *')
@@ -11,7 +18,7 @@ pipeline{
         MAVEN_HOME='/usr/share/maven'
         JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
         ENV='qa'
-        // ENV="${params.ENV}
+        // ENV="${params.ENV}"
         EMAIL_RECIPIENTS='sharan4748@gmail.com'
 
     }
