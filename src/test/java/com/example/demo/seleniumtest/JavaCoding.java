@@ -1170,4 +1170,15 @@ public class JavaCoding {
 
     }
 
+    public void tfest() {
+        System.out.println();
+    }
+
+    public void tesft() {
+        System.out.println();
+    }
+
+    public void testf() {
+        System.out.println();
+    }
 }

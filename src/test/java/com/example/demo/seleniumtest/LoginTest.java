@@ -336,4 +336,47 @@ public class LoginTest {
 
     }
 
+    @Test
+    public void makeMyTrip() {
+        WebDriverManager.chromedriver().setup();
+        ChromeDriver driver = new ChromeDriver();
+        driver.get("https://www.makemytrip.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        driver.findElement(By.cssSelector("section[class='modalMain tcnFooter'] span[class='commonModal__close']"))
+                .click();
+
+        WebElement date = driver.findElement(
+                By.cssSelector("div[class='flt_fsw_inputBox dates inactiveWidget '] label[for='departure']"));
+        date.click();
+
+        WebElement take = driver.findElement(By.cssSelector("div[class$='selected'] div[class='dateInnerCell']"));
+        System.out.println(take.getText());
+
+        boolean falg = true;
+
+        while (falg) {
+
+            try {
+                WebElement month = driver
+                        .findElement(By.xpath("//div[@class='DayPicker-Caption']/div[text()='October 2025']"));
+
+                String selectdate = month.getText();
+
+                if (selectdate.contains("October")) {
+                    falg = false;
+                }
+
+            } catch (NoSuchElementException ex) {
+
+            }
+
+            WebElement nextMonth = driver.findElement(By.cssSelector(
+                    "div[class='DayPicker-wrapper'] div[class='DayPicker-NavBar'] span[aria-label='Next Month']"));
+            nextMonth.click();
+        }
+
+    }
+
 }
