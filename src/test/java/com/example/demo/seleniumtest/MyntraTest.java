@@ -46,6 +46,7 @@ public class MyntraTest {
 
         Actions action = new Actions(driver);
         action.moveToElement(kids).perform();
+        // action.sendKeys(kids,"sharan").perform();
 
         List<WebElement> boys = driver.findElements(By.xpath("(//ul[@class='desktop-navBlock'])[1]/li/a"));
 

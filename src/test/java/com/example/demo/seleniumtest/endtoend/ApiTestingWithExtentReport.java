@@ -1,7 +1,7 @@
 package com.example.demo.seleniumtest.endtoend;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.util.List;
+import java.util.Map;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -9,7 +9,10 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.ExtentTest;
 
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.Cookie;
+import io.restassured.http.Cookies;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
@@ -32,6 +35,28 @@ public class ApiTestingWithExtentReport {
         }
 
         test.pass("GET request returned status code 200");
+
+        // Cookies
+        Map<String, String> cokies = repsnse.getCookies();
+        for (Map.Entry<String, String> entry : cokies.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+
+        }
+        Cookies det = repsnse.getDetailedCookies();
+        List<Cookie> lis = det.asList();
+        for (Cookie kk : lis) {
+            System.out.println(kk.getName());
+        }
+
+        // Headers
+
+        Headers heder = repsnse.getHeaders();
+        List<Header> lst = heder.asList();
+        for (Header hd : lst) {
+            System.out.println(hd.getName());
+            System.out.println(hd.getValue());
+        }
 
     }
 

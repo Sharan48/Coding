@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -15,7 +15,9 @@ import org.apache.hc.core5.util.Asserts;
 import org.checkerframework.checker.units.qual.t;
 import org.mozilla.javascript.JavaScriptException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -254,6 +256,13 @@ public class LoginTest {
         driver.get("https://infinite-scroll.com/demo/full-page");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
+        Set<Cookie> cok = driver.manage().getCookies();
+        for (Cookie ckies : cok) {
+            String name = ckies.getName();
+            System.out.println(name);
+            String value = ckies.getValue();
+            System.out.println(value);
+        }
 
         int scroll = 6;
         boolean found = false;
@@ -361,22 +370,71 @@ public class LoginTest {
             try {
                 WebElement month = driver
                         .findElement(By.xpath("//div[@class='DayPicker-Caption']/div[text()='October 2025']"));
+                falg = false;
 
                 String selectdate = month.getText();
+                System.out.println(selectdate);
 
-                if (selectdate.contains("October")) {
-                    falg = false;
+                // once month found, click on date
+                // list of multiple monts both date and price
+                List<WebElement> list = driver.findElements(By.xpath(
+                        "//div[contains(@class,'DayPicker-Day') and not(contains(@class,'DayPicker-Day--disabled')) and not(contains(@class,'DayPicker-Day--outside'))]/div[@class='dateInnerCell']"));
+                for (WebElement ele : list) {
+                    System.out.println(ele.getText().substring(0, 2));
                 }
 
+                // list of price only
+                List<WebElement> price = driver.findElements(By.xpath(
+                        "//div[contains(@class,'DayPicker-Day') and not(contains(@class,'disabled'))]//p[@class=' todayPrice']"));
+
+                for (WebElement k : price) {
+                    System.out.println(k.getText());
+                }
+
+                // list of dates only
+                List<WebElement> dates = driver.findElements(By.xpath(
+                        "//div[contains(@class,'DayPicker-Day') and not (contains(@class,'DayPicker-Day--outside'))]/div[@class='dateInnerCell']/p[not(@class)]"));
+
+                for (WebElement dt : dates) {
+                    System.out.println(dt.getText());
+                    String sldate = dt.getText();
+                    // if (sldate.equals("15")) {
+                    // dt.click();
+                    // break;
+                    // }
+                }
+                // single month with only avaible price
+                // String path =
+                // "//div[@class='DayPicker-Months']/div[1]/div[contains(@class,'Body')]/div[@class='DayPicker-Week']/div[contains(@class,'DayPicker-Day'
+                // ) and not
+                // (contains(@class,'--outside'))]/div[@class='dateInnerCell']/p[contains(@class,'todayPrice')
+                // and not (contains(@style,'color: rgb(0, 0, 0);'))]";
+                // single month
+                List<WebElement> sep = driver.findElements(By.xpath(
+                        "//div[@class='DayPicker-Months']/div[1]/div[contains(@class,'Body')]/div[@class='DayPicker-Week']/div[contains(@class,'DayPicker-Day' ) and not  (contains(@class,'--outside'))]/div[@class='dateInnerCell']/p[not(@class)]"));
+                for (WebElement seplist : sep) {
+                    System.out.println(seplist.getText());
+                    if (seplist.getText().equals("28")) {
+                        seplist.click();
+                        break;
+                    }
+                }
+                // WebElement sele = driver.findElement(
+                // By.xpath("//div[@aria-label='Wed Oct 15 2025' and
+                // contains(@class,'DayPicker-Day')]"));
+                // sele.click();
+
             } catch (NoSuchElementException ex) {
+                WebElement nextMonth = driver.findElement(By.cssSelector(
+                        "div[class='DayPicker-wrapper'] div[class='DayPicker-NavBar'] span[aria-label='Next Month']"));
+                nextMonth.click();
 
             }
 
-            WebElement nextMonth = driver.findElement(By.cssSelector(
-                    "div[class='DayPicker-wrapper'] div[class='DayPicker-NavBar'] span[aria-label='Next Month']"));
-            nextMonth.click();
         }
 
     }
 
 }
+// In table not selecting links
+//// table[@class='ws-table-all notranslate']//tbody//tr//td[not(a)]

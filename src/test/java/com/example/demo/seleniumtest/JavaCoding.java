@@ -975,6 +975,27 @@ public class JavaCoding {
         }
     }
 
+    public static void replaceCharWithInt() {
+        String str = "tomorrow";
+        // output: t3m3223w
+
+        Map<Character, Integer> map = new LinkedHashMap<>();
+
+        for (char ch : str.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            if (map.get(c) > 1) {
+                builder.append(map.get(c));
+            } else {
+                builder.append(c);
+            }
+        }
+        System.out.println(builder.toString());
+    }
+
     // Array vs ArrayList
     public static void arrayList() {
         final ArrayList<Integer> list = new ArrayList<>();
@@ -1128,6 +1149,117 @@ public class JavaCoding {
 
     }
 
+    public static void repeatChar() {
+        String str = "a3b9";
+
+        StringBuilder ouput = new StringBuilder();
+
+        int i = 0;
+        while (i < str.length()) {
+
+            char ch = str.charAt(i);
+            i++;
+
+            StringBuilder num = new StringBuilder();
+            while (i < str.length() && Character.isDigit(str.charAt(i))) {
+                num.append(str.charAt(i));
+                i++;
+            }
+
+            if (num.length() > 0) {
+                int d = Integer.parseInt(num.toString());
+                for (int j = 0; j < d; j++) {
+                    ouput.append(ch);
+                }
+            }
+
+        }
+        System.out.println(ouput.toString());
+    }
+
+    public static void findSumIndices() {
+
+        int[] nums = { 6, 8, 11, 6, 7, 18 };
+        int target = 17;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            if (map.containsKey(complement)) {
+                System.out.println("Indices found: " + map.get(complement) + " and " + i);
+                return;
+            }
+
+            map.put(nums[i], i);
+        }
+
+        System.out.println("No two elements found with sum " + target);
+    }
+
+    public static void findMaxSubstring() {
+
+        // length() starts counting from 1, but character indexing (used in charAt,
+        // substring, etc.) starts from 0.
+        String[] words = { "fan", "fish", "fork", "fun", "file", "fog", "fat", "fizz", "fame", "fast" };
+
+        Map<String, Integer> map = new HashMap<>();
+        for (String str : words) {
+            for (int i = 1; i < str.length(); i++) {
+                String prefix = str.substring(0, i);
+                map.put(prefix, map.getOrDefault(prefix, 0) + 1);
+            }
+        }
+
+        String mostFrequentPrefix = null;
+        int maxCount = 0;
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                mostFrequentPrefix = entry.getKey();
+                maxCount = entry.getValue();
+            }
+        }
+
+        System.out.println("Most frequent prefix: " + mostFrequentPrefix + " (appears " + maxCount + " times)");
+    }
+
+    // print duplicates character without using any inbuilt methods
+
+    public static void duplicatesChar() {
+        String str = "Automation";
+
+        int[] ary = new int[256];
+
+        for (char ch : str.toLowerCase().toCharArray()) {
+            ary[ch]++;
+        }
+
+        for (int i = 0; i < 256; i++) {
+
+            if (ary[i] > 1) {
+                System.out.println((char) i + "--->" + ary[i]);
+            }
+        }
+    }
+
+    public static void printWordMatchChar() {
+
+        String input = "Madam Radar Hello Level World Refer Apple Civic Noon Kayak Rotator sharan";
+
+        String[] word = input.split("\\s+");
+        System.out.println("print string which matching char from start and end");
+        for (String str : word) {
+            char start = Character.toLowerCase(str.charAt(0));
+            char end = Character.toLowerCase(str.charAt(str.length() - 1));
+
+            if (start == end) {
+                System.out.println(str);
+            }
+        }
+    }
+
     public static void main(String[] ard) {
         // testCode();
         // // Check palidrome
@@ -1166,7 +1298,11 @@ public class JavaCoding {
 
         // testMatrix();
 
-        arrayList();
+        // arrayList();
+        // replaceCharWithInt();
+        // findMaxSubstring();
+        // duplicatesChar();
+        printWordMatchChar();
 
     }
 

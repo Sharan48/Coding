@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bouncycastle.util.Objects;
+
 public class HashMapCollisionExample {
 
     // Custom class with overridden hashCode() and equals()
     static class Key {
         int id;
+        // double dd;
 
         Key(int id) {
             this.id = id;
@@ -25,6 +28,8 @@ public class HashMapCollisionExample {
         @Override
         public int hashCode() {
             return 1; // All keys will have the same hash code (intentional collision)
+            // return Objects.hashCode(id);
+
         }
 
         // Override equals() to compare the actual object content
@@ -36,6 +41,7 @@ public class HashMapCollisionExample {
                 return false;
             Key key = (Key) obj;
             return id == key.id;
+
         }
     }
 

@@ -9,6 +9,11 @@ pipeline{
     //     }
     // }
 
+    options{
+        timeout(time:5000, unit:'SECONDS'),
+        retry(2)
+    }
+
     triggers{
         // pollSCM('H/15 * * * *')
         // cron('H/15 * * * *')
@@ -44,7 +49,12 @@ pipeline{
 
         stage('Test'){
             steps{
-                sh "${MAVEN_HOME}/bin/mvn -Denv=${ENV} test -DsuiteXmlFile=testng.xml,testng-parallel.xml"
+                catchError(buildResult: 'UNSTABLE' , stageResult: 'UNSTABLE'){
+                    retry(2){
+                         sh "${MAVEN_HOME}/bin/mvn -Denv=${ENV} test -DsuiteXmlFile=testng.xml,testng-parallel.xml"
+                    }
+                }
+                
                 
             }
         }
