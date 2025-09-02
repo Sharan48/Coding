@@ -6,21 +6,27 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.hc.core5.util.Asserts;
 import org.checkerframework.checker.units.qual.t;
 import org.mozilla.javascript.JavaScriptException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -89,6 +95,7 @@ public class LoginTest {
         Thread.sleep(2000);
 
         System.out.println("run in jenkins test, im here jj");
+        Assert.assertTrue(false);
 
         WebElement username = driver.findElement(By.cssSelector("#outlined-basic"));
         username.sendKeys(usernam);
@@ -220,4 +227,214 @@ public class LoginTest {
 
     }
 
+    @Test
+    public void testScrollPage() throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://infinite-scroll.com/demo/full-page");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        int scroll = 6;
+
+        for (int i = 1; i <= scroll; i++) {
+            JavascriptExecutor scpt = (JavascriptExecutor) driver;
+            scpt.executeScript("window.scrollBy(0,document.body.scrollHeight);");
+            Thread.sleep(2000);
+        }
+
+        Thread.sleep(2000);
+        WebElement located = driver.findElement(By.xpath("//p[text()='End of content']"));
+        System.out.println(located.getText());
+
+    }
+
+    @Test
+    public void unKnownPage() throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://infinite-scroll.com/demo/full-page");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        Set<Cookie> cok = driver.manage().getCookies();
+        for (Cookie ckies : cok) {
+            String name = ckies.getName();
+            System.out.println(name);
+            String value = ckies.getValue();
+            System.out.println(value);
+        }
+
+        int scroll = 6;
+        boolean found = false;
+
+        for (int i = 1; i <= scroll; i++) {
+
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,document.body.scrollHeight);");
+            Thread.sleep(1500);
+
+            try {
+                WebElement target = driver.findElement(By.xpath("//p[text()='End of content']"));
+                String text = target.getText();
+                if (!text.isEmpty()) {
+                    System.out.println("ELement found at page " + scroll + " " + text);
+                    found = true;
+                    break;
+                }
+
+            } catch (NoSuchElementException e) {
+                System.out.println("scroll " + i + " :Element is not found");
+            }
+
+        }
+        if (!found) {
+            System.out.println("Elemet not found after maximum scroll: " + scroll);
+        }
+
+        driver.quit();
+
+    }
+
+    @Test
+    public void testPagination() throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://practice.expandtesting.com/dynamic-pagination-table");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        boolean nextPage = true;
+
+        while (nextPage) {
+
+            Thread.sleep(2000);
+
+            // Here fetching data from table
+            List<WebElement> list = driver.findElements(By.cssSelector("tbody#demo tr td"));
+            for (WebElement ele : list) {
+                System.out.println(ele.getText());
+            }
+            // parent element
+            // if you try to using child element at the end you will get stale element
+            // reference.
+            // In this pagination im clicking on linkText
+            // <li class="paginate_button page-item next disabled" id="example_next">
+            // <a class="page-link" aria-disabled="true">Next</a>
+            // </li>
+            WebElement pageNext = driver.findElement(By.id("example_next"));
+            Thread.sleep(2000);
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions
+                    .visibilityOfElementLocated(By.id("example_next")));
+
+            // check class attribute have disabled value then break the loop bcz the button
+            // become a disabled
+            String check = pageNext.getAttribute("class");
+            if (check.contains("disabled")) {
+                nextPage = false;
+            } else {
+                // child element
+                WebElement lnk = pageNext.findElement(By.tagName("a"));
+                lnk.click();
+            }
+
+        }
+
+        driver.quit();
+
+    }
+
+    @Test
+    public void makeMyTrip() {
+        WebDriverManager.chromedriver().setup();
+        ChromeDriver driver = new ChromeDriver();
+        driver.get("https://www.makemytrip.com/");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+
+        driver.findElement(By.cssSelector("section[class='modalMain tcnFooter'] span[class='commonModal__close']"))
+                .click();
+
+        WebElement date = driver.findElement(
+                By.cssSelector("div[class='flt_fsw_inputBox dates inactiveWidget '] label[for='departure']"));
+        date.click();
+
+        WebElement take = driver.findElement(By.cssSelector("div[class$='selected'] div[class='dateInnerCell']"));
+        System.out.println(take.getText());
+
+        boolean falg = true;
+
+        while (falg) {
+
+            try {
+                WebElement month = driver
+                        .findElement(By.xpath("//div[@class='DayPicker-Caption']/div[text()='October 2025']"));
+                falg = false;
+
+                String selectdate = month.getText();
+                System.out.println(selectdate);
+
+                // once month found, click on date
+                // list of multiple monts both date and price
+                List<WebElement> list = driver.findElements(By.xpath(
+                        "//div[contains(@class,'DayPicker-Day') and not(contains(@class,'DayPicker-Day--disabled')) and not(contains(@class,'DayPicker-Day--outside'))]/div[@class='dateInnerCell']"));
+                for (WebElement ele : list) {
+                    System.out.println(ele.getText().substring(0, 2));
+                }
+
+                // list of price only
+                List<WebElement> price = driver.findElements(By.xpath(
+                        "//div[contains(@class,'DayPicker-Day') and not(contains(@class,'disabled'))]//p[@class=' todayPrice']"));
+
+                for (WebElement k : price) {
+                    System.out.println(k.getText());
+                }
+
+                // list of dates only
+                List<WebElement> dates = driver.findElements(By.xpath(
+                        "//div[contains(@class,'DayPicker-Day') and not (contains(@class,'DayPicker-Day--outside'))]/div[@class='dateInnerCell']/p[not(@class)]"));
+
+                for (WebElement dt : dates) {
+                    System.out.println(dt.getText());
+                    String sldate = dt.getText();
+                    // if (sldate.equals("15")) {
+                    // dt.click();
+                    // break;
+                    // }
+                }
+                // single month with only avaible price
+                // String path =
+                // "//div[@class='DayPicker-Months']/div[1]/div[contains(@class,'Body')]/div[@class='DayPicker-Week']/div[contains(@class,'DayPicker-Day'
+                // ) and not
+                // (contains(@class,'--outside'))]/div[@class='dateInnerCell']/p[contains(@class,'todayPrice')
+                // and not (contains(@style,'color: rgb(0, 0, 0);'))]";
+                // single month
+                List<WebElement> sep = driver.findElements(By.xpath(
+                        "//div[@class='DayPicker-Months']/div[1]/div[contains(@class,'Body')]/div[@class='DayPicker-Week']/div[contains(@class,'DayPicker-Day' ) and not  (contains(@class,'--outside'))]/div[@class='dateInnerCell']/p[not(@class)]"));
+                for (WebElement seplist : sep) {
+                    System.out.println(seplist.getText());
+                    if (seplist.getText().equals("28")) {
+                        seplist.click();
+                        break;
+                    }
+                }
+                // WebElement sele = driver.findElement(
+                // By.xpath("//div[@aria-label='Wed Oct 15 2025' and
+                // contains(@class,'DayPicker-Day')]"));
+                // sele.click();
+
+            } catch (NoSuchElementException ex) {
+                WebElement nextMonth = driver.findElement(By.cssSelector(
+                        "div[class='DayPicker-wrapper'] div[class='DayPicker-NavBar'] span[aria-label='Next Month']"));
+                nextMonth.click();
+
+            }
+
+        }
+
+    }
+
 }
+// In table not selecting links
+//// table[@class='ws-table-all notranslate']//tbody//tr//td[not(a)]

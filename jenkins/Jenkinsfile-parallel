@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Run Parallel Browsers') {
+            steps {
+                sh 'mvn test -DsuiteXmlFile=testng-parallel.xml'
+            }
+        }
+    }
+
+    post {
+         success{
+            echo 'Build Passed!'
+        }
+        failure{
+            echo 'Bild failed!'
+        }
+    }
+}

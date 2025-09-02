@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.ListDocument.List;
 import org.openqa.selenium.By;
@@ -16,7 +18,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.v117.network.model.Response;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -26,8 +30,11 @@ import org.hamcrest.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import io.restassured.module.jsv.JsonSchemaValidator;
 
 public class ApiAndSelenium {
@@ -67,7 +74,8 @@ public class ApiAndSelenium {
                 // System.out.println(name);
                 io.restassured.response.Response repsons = RestAssured.given().baseUri("https://reqres.in").when()
                                 .get("/api/users");
-                repsons.then().body("data", Matchers.notNullValue());
+                repsons.then().body("data", Matchers.matchesPattern("^.+@(gmail|bscxpress).com"));
+
         }
 
         @Test
@@ -82,6 +90,8 @@ public class ApiAndSelenium {
                 RequestSpecification url = new RequestSpecBuilder()
                                 .setBaseUri("http://52.66.141.164:8001/opera-services")
                                 .build();
+
+                ResponseSpecification rp = new ResponseSpecBuilder().expectContentType(ContentType.JSON).build();
 
                 RestAssured.given().body(body).when().get("http://52.66.141.164:8001/opera-services/v1/opera/branch")
                                 .then()
@@ -110,10 +120,23 @@ public class ApiAndSelenium {
 
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-                WebElement username = driver.findElement(By.id("outlined-basic"));
-                username.sendKeys("sharantest");
+                // WebElement username = driver.findElement(By.id("outlined-basic"));
+                // username.sendKeys("sharantest");
 
-                WebElement password = driver.findElement(RelativeLocator.with(By.tagName("input")).below(username));
+                FluentWait<WebDriver> wat = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(10))
+                                .pollingEvery(Duration.ofSeconds(5)).ignoring(NoSuchElementException.class);
+
+                WebElement usrname = wat.until(new Function<WebDriver, WebElement>() {
+
+                        @Override
+                        public WebElement apply(WebDriver arg0) {
+                                return arg0.findElement(By.id("outlined-basic"));
+                        }
+
+                });
+                usrname.sendKeys("sharantest");
+
+                WebElement password = driver.findElement(RelativeLocator.with(By.tagName("input")).below(usrname));
                 password.sendKeys("password");
 
                 WebElement loginButton = driver.findElement(RelativeLocator.with(By.tagName("button")).below(password));
@@ -125,7 +148,7 @@ public class ApiAndSelenium {
 
         }
 
-        @Test
+        @Test()
         public void testDropDown() {
 
                 driver.get("https://demoqa.com/select-menu");

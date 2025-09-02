@@ -1,8 +1,8 @@
 package com.example.demo.seleniumtest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bouncycastle.util.Objects;
+
 public class HashMapCollisionExample {
 
     // Custom class with overridden hashCode() and equals()
     static class Key {
         int id;
+        // double dd;
 
         Key(int id) {
             this.id = id;
@@ -25,6 +28,8 @@ public class HashMapCollisionExample {
         @Override
         public int hashCode() {
             return 1; // All keys will have the same hash code (intentional collision)
+            // return Objects.hashCode(id);
+
         }
 
         // Override equals() to compare the actual object content
@@ -36,6 +41,7 @@ public class HashMapCollisionExample {
                 return false;
             Key key = (Key) obj;
             return id == key.id;
+
         }
     }
 
@@ -88,7 +94,7 @@ public class HashMapCollisionExample {
         set.add("shaq");
         set.add(null);
 
-        Hashtable<String, Integer> hash = new Hashtable<>();
+        Map<String, Integer> hash = new Hashtable<>();
         hash.put("sharan", 1);
         hash.put("sharan", 2);
         hash.put("sharan1", 1);
@@ -105,6 +111,7 @@ public class HashMapCollisionExample {
 
         pascalTraingle();
         testingKey();
+
     }
 
     public static void pascalTraingle() {
@@ -181,7 +188,7 @@ public class HashMapCollisionExample {
             for (Map.Entry<String, Object> entry : lst.entrySet()) {
                 if (entry.getKey().equals("name")) {
                     Object hh = entry.getValue();
-                    System.out.println("value " + entry.getValue());
+                    System.out.println("value of product :" + entry.getValue());
                 }
 
                 Object val = entry.getValue();
@@ -193,7 +200,7 @@ public class HashMapCollisionExample {
                 System.out.println("size " + lk.size());
                 Collection<Object> ss = lk.values();
                 Object[] ary = ss.toArray();
-                System.out.println("collection values " + ary);
+                System.out.println("collection values " + ary.toString());
                 lk.replace("price", 9999);
                 for (String key : lk.keySet()) {
                     if (key.equals("price")) {
@@ -266,6 +273,25 @@ class Product {
     public String toString() {
         return "[size=" + size + ", name=" + name + ", price=" + price + "]";
         // return size + name + price;
+    }
+
+}
+
+class ComparatorTest implements Comparator<Product> {
+
+    @Override
+    public int compare(Product p1, Product p2) {
+        int result = p1.name.compareTo(p2.name);
+
+        if (result == 0) {
+            result = Integer.compare(p1.size, p2.size);
+        }
+
+        if (result == 0) {
+            result = Double.compare(p1.price, p2.price);
+        }
+
+        return result;
     }
 
 }

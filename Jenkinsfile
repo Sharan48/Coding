@@ -1,0 +1,82 @@
+
+pipeline{
+    agent any
+
+    // agent{
+    //     dockerfile{
+    //         filename 'Dockerfile'
+    //         dir '.'
+    //     }
+    // }
+
+    options{
+        timeout(time:5000, unit:'SECONDS'),
+        retry(2)
+    }
+
+    triggers{
+        // pollSCM('H/15 * * * *')
+        // cron('H/15 * * * *')
+    }
+
+    environment {
+        MAVEN_HOME='/usr/share/maven'
+        JAVA_HOME='/usr/lib/jvm/java-17-openjdk-amd64'
+        ENV='qa'
+        // ENV="${params.ENV}"
+        EMAIL_RECIPIENTS='sharan4748@gmail.com'
+
+    }
+
+    // parameters{
+    //     choice(name:'ENV', choices:['qa','staging','production'],description:'Select environment to run test')
+    // }
+
+    stages{
+       
+       
+        stage('Checkout'){
+            steps{
+                git url: 'https://github.com/Sharan48/Coding.git', branch:'testing_branch'
+            } 
+        }
+
+        stage('Build'){
+            steps{
+                sh "${MAVEN_HOME}/bin/mvn clean compile"
+            }
+        }
+
+        stage('Test'){
+            steps{
+                catchError(buildResult: 'UNSTABLE' , stageResult: 'UNSTABLE'){
+                    retry(2){
+                         sh "${MAVEN_HOME}/bin/mvn -Denv=${ENV} test -DsuiteXmlFile=testng.xml,testng-parallel.xml"
+                    }
+                }
+                
+                
+            }
+        }
+
+        stage('Archive Test Rsults'){
+            steps{
+                archiveArtifacts artifacts: 'target/surefire-reports/*.xml', fingerprint:true
+            }
+        }
+
+    }
+
+   post {
+    always {
+        emailext(
+            subject: "Automation Reports - ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
+            body: "Test completed. Please check the attached report. And console output ${env.BUILD_URL}",
+            to: "${EMAIL_RECIPIENTS}",
+            attachmentsPattern: "**/target/surefire-reports/*.html,**/target/surefire-reports/*.xml",
+            mimeType: 'text/html'
+        )
+    }
+}
+
+}

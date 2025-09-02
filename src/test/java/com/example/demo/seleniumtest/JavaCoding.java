@@ -2,10 +2,14 @@ package com.example.demo.seleniumtest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,47 +20,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.apache.poi.hpsf.Decimal;
+
 public class JavaCoding {
-
-    public static void main(String[] ard) {
-        testCode();
-        // Check palidrome
-
-        int[] palidrome = { 1, 2, 3, 2, 1 };
-        System.out.println("is array palidrome? " + checkPalidrome(palidrome));
-
-        // check isPrime Number
-        System.out.println("isPrime? " + isPrime(21));
-        findIndex();
-
-        // check anagram of string
-        String str1 = "tomato";
-        String str2 = "matoto";
-
-        if (checkAnagram(str1, str2)) {
-            System.out.println("anagram");
-        } else {
-            System.out.println(" Not a anagram");
-        }
-
-        removeDuplicateCharacters();
-
-        // Moving odd number to left and even number to right
-        moveCursorLeftToRight();
-
-        testCodes();
-
-        arrayManipilate();
-        moveCharacter();
-
-        String str = "abc";
-        permutations(str, "");
-
-        reverseHalfString();
-
-        testMatrix();
-
-    }
 
     public static void arrayWithStream() {
 
@@ -481,6 +447,32 @@ public class JavaCoding {
 
     }
 
+    public static boolean anagranInt(int n, int m) {
+
+        int[] x = new int[10];
+        int[] y = new int[10];
+
+        while (n != 0) {
+            int temp = n % 10;
+            x[temp]++;
+            n = n / 10;
+        }
+
+        while (m != 0) {
+            int temp1 = m % 10;
+            y[temp1]++;
+            m = m / 10;
+        }
+
+        for (int i = 0; i < 10; i++) {
+            if (x[i] != y[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static void removeDuplicateCharacters() {
         String str1 = "Automation";
 
@@ -615,7 +607,7 @@ public class JavaCoding {
 
         int pal = 1233219;
         int original = pal;
-        int revers = 1;
+        int revers = 0;
 
         while (pal != 0) {
             int digit = pal % 10;
@@ -805,7 +797,7 @@ public class JavaCoding {
 
     public static void sortLowerAndUppercase() {
         String str = "ajertinvlAHF DKLNV DK";
-        String replace = str.replaceAll("\\s+", "");
+        String replace = str.replaceAll("\s+", "");
 
         StringBuilder lower = new StringBuilder();
         StringBuilder upper = new StringBuilder();
@@ -884,6 +876,7 @@ public class JavaCoding {
             }
         }
         System.out.println("Try programiz.pro " + set1);
+
     }
 
     public static void sumIntegerInStringArray() {
@@ -931,6 +924,35 @@ public class JavaCoding {
         System.out.println(new String(ch));
     }
 
+    public void reverseOrder() {
+        String[] str = { "sharan", "as", "coding", "sharanpage", "aman" };
+
+        // reverse array order
+        // first way
+        for (int i = 0; i < str.length / 2; i++) {
+            String temp = str[i];
+            str[i] = str[str.length - 1 - i];
+            str[str.length - 1 - i] = temp;
+        }
+        System.out.println(Arrays.toString(str));
+
+        // second way
+        int left = 0, right = str.length - 1;
+        while (left < right) {
+            String ch = str[left];
+            str[left] = str[right];
+            str[right] = ch;
+            left++;
+            right--;
+        }
+
+        // reverse each string
+        for (int i = 0; i < str.length; i++) {
+            str[i] = new StringBuilder(str[i]).reverse().toString();
+        }
+        System.out.println(Arrays.toString(str));
+    }
+
     public static void testMatrix() {
 
         Integer[][] matrix = {
@@ -942,10 +964,8 @@ public class JavaCoding {
         // check 5
 
         for (int i = 0; i < matrix.length; i++) { // row count
-            for (int j = 0; j < matrix[i].length; j++) {
-
+            for (int j = 0; j < matrix[i].length; j++) {// column count
                 System.out.print(matrix[i][j] + " ");
-                // column count
                 // if (matrix[i][j].equals(5)) {
                 // System.out.println("Found 5 at position " + i + " " + j);
                 // }
@@ -955,4 +975,346 @@ public class JavaCoding {
         }
     }
 
+    public static void replaceCharWithInt() {
+        String str = "tomorrow";
+        // output: t3m3223w
+
+        Map<Character, Integer> map = new LinkedHashMap<>();
+
+        for (char ch : str.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            if (map.get(c) > 1) {
+                builder.append(map.get(c));
+            } else {
+                builder.append(c);
+            }
+        }
+        System.out.println(builder.toString());
+    }
+
+    // Array vs ArrayList
+    public static void arrayList() {
+        final ArrayList<Integer> list = new ArrayList<>();
+        list.add(9);
+        list.add(10);
+        list.add(1);
+        list.add(3);
+        // System.out.println(list);
+
+        // list.sort(Comparator.comparingInt(Integer::intValue));
+        // list.sort(Comparator.naturalOrder());
+        // list.sort(Comparator.reverseOrder());
+        System.out.println(list);
+
+        System.out.println(list.size());
+        System.out.println(list.contains(9));
+        System.out.println(list.get(0));
+        System.out.println(list.isEmpty());
+        System.out.println(list.remove(0)); // remove() have two scenarios one is based on index and object expect
+                                            // Integer remaining will handled by internally but integer you have to use
+                                            // for object Integer.valueOf()
+        System.out.println(list.get(0));
+        System.out.println(Integer.valueOf(8));
+        System.out.println(list);
+        // list.clear();
+        // System.out.println(list.get(0));// After clear you want to fetch element from
+        // list you will get exception Exception in thread "main"
+        // java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+
+        Iterator<Integer> it = list.iterator();
+        while (it.hasNext()) {
+            Integer i = it.next();
+            System.out.println(i);
+        }
+
+        for (Integer jj : list) {
+            System.out.println(jj);
+        }
+
+        System.out.println(list.set(1, 9));
+        System.out.println(list.get(1));
+        System.out.println(list);
+
+        HashSet<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(3);
+        set.add(4);
+        System.out.println(set.size());
+
+        for (Integer kk : set) {
+            System.out.println(kk);
+        }
+
+        LinkedList<Integer> limked = new LinkedList<>();
+
+        LinkedHashSet<Integer> lnkset = new LinkedHashSet<>();
+        lnkset.add(1);
+        lnkset.remove(1);
+        System.out.println(lnkset);
+
+        Integer[] ary = { 1, 2, 3, 4, 5 };
+        Integer[] ary1 = { 2, 3, 4, 6, 7, 7, 8 };
+
+        ArrayList<Integer> l1 = new ArrayList<>(Arrays.asList(ary));
+
+        ArrayList<Integer> l2 = new ArrayList<>(Arrays.asList(ary1));
+
+        // l1.retainAll(l2); // retain duplicates
+        // System.out.println(l1);
+        // System.out.println(l2);
+
+        // l2.removeAll(l1); // removes duplicates
+        // System.out.println(l2);
+
+        // if (l1.containsAll(l2)) {
+        // System.out.println("con");
+        // } else {
+        // System.out.println("no");
+        // }
+
+        // convert any primitive, object to string
+        // String nl = String.valueOf(null); // NullPointerException: Cannot read the
+        // array length because "value" is null
+        // System.out.println(nl);
+        String in = String.valueOf(0);
+        System.out.println(in);
+
+        // Testing sort by using COmparable and Comparator interface
+
+        Product p1 = new Product(3, "sharan", 500);
+        Product p2 = new Product(5, "aman", 900);
+        Product p3 = new Product(8, "kushi", 5499);
+        Product p4 = new Product(11, "jaisha", 100);
+
+        List<Product> pd = new ArrayList<>();
+        pd.add(p4);
+        pd.add(p2);
+        pd.add(p3);
+        pd.add(p1);
+
+        System.out.println(pd);
+
+        Collections.sort(pd, new ComparatorTest());
+
+        // pd.sort(Comparator.comparing(Product::getName).thenComparing(Product::getSize)
+        // .thenComparing(Product::getPrice));
+        System.out.println(pd);
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("sharan");
+        buffer.replace(4, 5, "55");
+        System.out.println(buffer);
+        buffer.insert(5, 4);
+        System.out.println(buffer);
+        // buffer.delete(4, 5);
+        // System.out.println(buffer);
+        buffer.deleteCharAt(5);
+        System.out.println(buffer);
+
+        // sort an array according to the order defined by another array
+        Integer[] arys = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        Integer[] order = { 3, 1, 4, 5 };
+
+        List<Integer> lists = orderArray(arys, order);
+        System.out.println(lists);
+
+    }
+
+    // sort an array according to the order defined by another array
+    public static List<Integer> orderArray(Integer[] ary, Integer[] order) {
+
+        Map<Integer, Integer> priorityMap = new HashMap<>();
+        for (int i = 0; i < order.length; i++) {
+            priorityMap.put(order[i], i);
+        }
+
+        List<Integer> list = new ArrayList<>(Arrays.asList(ary));
+
+        list.sort((a, b) -> {
+            if (priorityMap.containsKey(a) && priorityMap.containsKey(b)) {
+                return priorityMap.get(a) - priorityMap.get(b);
+            } else if (priorityMap.containsKey(a)) {
+                return -1; // a comes first
+            } else if (priorityMap.containsKey(b)) {
+                return 1; // b comes first
+            } else {
+                return a - b; // natural order
+            }
+        });
+
+        return list;
+
+    }
+
+    public static void repeatChar() {
+        String str = "a3b9";
+
+        StringBuilder ouput = new StringBuilder();
+
+        int i = 0;
+        while (i < str.length()) {
+
+            char ch = str.charAt(i);
+            i++;
+
+            StringBuilder num = new StringBuilder();
+            while (i < str.length() && Character.isDigit(str.charAt(i))) {
+                num.append(str.charAt(i));
+                i++;
+            }
+
+            if (num.length() > 0) {
+                int d = Integer.parseInt(num.toString());
+                for (int j = 0; j < d; j++) {
+                    ouput.append(ch);
+                }
+            }
+
+        }
+        System.out.println(ouput.toString());
+    }
+
+    public static void findSumIndices() {
+
+        int[] nums = { 6, 8, 11, 6, 7, 18 };
+        int target = 17;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            if (map.containsKey(complement)) {
+                System.out.println("Indices found: " + map.get(complement) + " and " + i);
+                return;
+            }
+
+            map.put(nums[i], i);
+        }
+
+        System.out.println("No two elements found with sum " + target);
+    }
+
+    public static void findMaxSubstring() {
+
+        // length() starts counting from 1, but character indexing (used in charAt,
+        // substring, etc.) starts from 0.
+        String[] words = { "fan", "fish", "fork", "fun", "file", "fog", "fat", "fizz", "fame", "fast" };
+
+        Map<String, Integer> map = new HashMap<>();
+        for (String str : words) {
+            for (int i = 1; i < str.length(); i++) {
+                String prefix = str.substring(0, i);
+                map.put(prefix, map.getOrDefault(prefix, 0) + 1);
+            }
+        }
+
+        String mostFrequentPrefix = null;
+        int maxCount = 0;
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                mostFrequentPrefix = entry.getKey();
+                maxCount = entry.getValue();
+            }
+        }
+
+        System.out.println("Most frequent prefix: " + mostFrequentPrefix + " (appears " + maxCount + " times)");
+    }
+
+    // print duplicates character without using any inbuilt methods
+
+    public static void duplicatesChar() {
+        String str = "Automation";
+
+        int[] ary = new int[256];
+
+        for (char ch : str.toLowerCase().toCharArray()) {
+            ary[ch]++;
+        }
+
+        for (int i = 0; i < 256; i++) {
+
+            if (ary[i] > 1) {
+                System.out.println((char) i + "--->" + ary[i]);
+            }
+        }
+    }
+
+    public static void printWordMatchChar() {
+
+        String input = "Madam Radar Hello Level World Refer Apple Civic Noon Kayak Rotator sharan";
+
+        String[] word = input.split("\\s+");
+        System.out.println("print string which matching char from start and end");
+        for (String str : word) {
+            char start = Character.toLowerCase(str.charAt(0));
+            char end = Character.toLowerCase(str.charAt(str.length() - 1));
+
+            if (start == end) {
+                System.out.println(str);
+            }
+        }
+    }
+
+    public static void main(String[] ard) {
+        // testCode();
+        // // Check palidrome
+
+        // int[] palidrome = { 1, 2, 3, 2, 1 };
+        // System.out.println("is array palidrome? " + checkPalidrome(palidrome));
+
+        // // check isPrime Number
+        // System.out.println("isPrime? " + isPrime(21));
+        // findIndex();
+
+        // // check anagram of string
+        // String str1 = "tomato";
+        // String str2 = "matoto";
+
+        // if (checkAnagram(str1, str2)) {
+        // System.out.println("anagram");
+        // } else {
+        // System.out.println(" Not a anagram");
+        // }
+
+        // removeDuplicateCharacters();
+
+        // Moving odd number to left and even number to right
+        // moveCursorLeftToRight();
+
+        // testCodes();
+
+        // arrayManipilate();
+        // moveCharacter();
+
+        // String str = "abc";
+        // permutations(str, "");
+
+        // reverseHalfString();
+
+        // testMatrix();
+
+        // arrayList();
+        // replaceCharWithInt();
+        // findMaxSubstring();
+        // duplicatesChar();
+        printWordMatchChar();
+
+    }
+
+    public void tfest() {
+        System.out.println();
+    }
+
+    public void tesft() {
+        System.out.println();
+    }
+
+    public void testf() {
+        System.out.println();
+    }
 }
